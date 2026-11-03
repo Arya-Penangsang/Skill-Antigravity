@@ -58,6 +58,24 @@ All analysis artifacts are saved in the `reports/` directory:
 
 ---
 
+## 🔬 Real-World Showcase: In-Memory Triage Case Study
+
+Included in the [`examples/`](examples/) directory is a real-world case study triaging an unverified activation binary (`KMSAuto++ x64.exe`, 40.9 MB) extracted safely via in-memory streaming:
+
+| Metric | Result |
+| :--- | :--- |
+| **Threat Score** | 🔥 **`100 / 100`** (`MALICIOUS`) |
+| **Architecture** | AMD64 (64-bit x64 PE) |
+| **SHA-256** | `4eb7d3d117382ee6935ee6d3e5902e44523e7529455e9a3d3c9daf035fa507ac` |
+| **Imphash** | `3b4bcc6db16a1a25e1c9cd8e1cf93242` |
+| **MITRE Techniques** | • *T1056.001 (Input Capture / Keylogging)*: `SetWindowsHookEx`, `GetAsyncKeyState`<br>• *T1547 / T1543 (Persistence)*: `CreateService`, `RegSetValueEx`<br>• *T1497 (Anti-Debugging Evasion)*: `CheckRemoteDebuggerPresent`<br>• *T1071 / T1105 (C2 Downloader)*: `InternetOpen`, `URLDownloadToFile` |
+
+- 📊 **[View Sample HTML Dashboard](examples/sample_triage_report.html)**
+- 📝 **[View Generated YARA Rule](examples/sample_detection.yar)**
+- 📋 **[View Structured JSON Report](examples/sample_triage_report.json)**
+
+---
+
 ## 🤖 Agent Skill Integration
 
 This repository includes a native agent skill located in `skills/malware-triage/SKILL.md`.
