@@ -7,17 +7,41 @@ from core.report_generator import ReportGenerator
 from core.packer_detector import PackerDetector
 from core.registry_diff import RegistryDiffEngine
 from core.network_sinkhole import NetworkSinkhole
+from core.quarantine_vault import QuarantineVault
+from core.network_forensics import NISTNetworkForensics
+from core.file_integrity import FileIntegrityScanner
 
 def main():
-    parser = argparse.ArgumentParser(description="Antigravity Automated Malware Analysis Sandbox")
-    parser.add_argument("target", help="Path to executable or file to analyze")
+    parser = argparse.ArgumentParser(description="Antigravity Automated Malware Analysis Sandbox & DFIR Engine")
+    parser.add_argument("target", nargs="?", help="Path to executable or file to analyze")
     parser.add_argument("--dynamic", action="store_true", help="Run in dynamic behavioral sandbox")
     parser.add_argument("--timeout", type=int, default=8, help="Timeout in seconds for dynamic sandbox execution")
     parser.add_argument("--reg-diff", action="store_true", help="Take pre- and post-registry snapshots to detect persistence")
     parser.add_argument("--sinkhole", action="store_true", help="Launch local simulated C2 DNS/HTTP sinkhole listener")
+    parser.add_argument("--quarantine", action="store_true", help="Safely XOR-neutralize and move malicious binary to Quarantine Vault")
+    parser.add_argument("--restore", help="Identifier (filename or SHA256) of a quarantined file to restore")
+    parser.add_argument("--restore-dir", default="restored_samples", help="Destination directory for restored sample")
     parser.add_argument("--outdir", default="reports", help="Output directory for reports")
 
     args = parser.parse_args()
+    vault = QuarantineVault(vault_dir="quarantine")
+
+    # Handle --restore mode
+    if args.restore:
+        print("=" * 65)
+        print("       ANTIGRAVITY QUARANTINE VAULT: RESTORE OPERATION          ")
+        print("=" * 65)
+        try:
+            restored_path = vault.restore_sample(args.restore, args.restore_dir)
+            print(f"[+] Successfully restored and de-XORed sample to: {restored_path}")
+            sys.exit(0)
+        except Exception as e:
+            print(f"[-] Restore failed: {e}")
+            sys.exit(1)
+
+    if not args.target:
+        parser.print_help()
+        sys.exit(1)
 
     if not os.path.exists(args.target):
         print(f"[-] Target file not found: {args.target}")
@@ -27,7 +51,7 @@ def main():
     target_name = os.path.basename(args.target)
 
     print("=" * 65)
-    print(f"   ANTIGRAVITY AUTOMATED MALWARE SANDBOX & TRIAGE ENGINE   ")
+    print(f"   ANTIGRAVITY AUTOMATED MALWARE SANDBOX & DFIR ENGINE   ")
     print("=" * 65)
     print(f"[*] Target Sample : {target_name}")
     print(f"[*] Full Path     : {args.target}")
@@ -79,7 +103,7 @@ def main():
     for cap in capabilities['capabilities']:
         print(f"    - [{cap['risk']} Risk] {cap['category']} (MITRE {cap['mitre']})")
 
-    # 2. Dynamic Sandbox & Registry Diff
+    # 2. Dynamic Sandbox & Observability
     dyn_results = None
     sinkhole_engine = None
     if args.sinkhole:
@@ -94,7 +118,9 @@ def main():
         reg_engine = RegistryDiffEngine()
         reg_engine.take_pre_snapshot()
 
+    fim_scanner = FileIntegrityScanner()
     if args.dynamic:
+        fim_scanner.take_baseline()
         print(f"\n[*] Phase 2: Running Dynamic Behavioral Sandbox ({args.timeout}s timeout)...")
         sandbox = DynamicSandbox(args.target, timeout_seconds=args.timeout)
         dyn_results = sandbox.run_dynamic_analysis(dry_run=False)
@@ -102,6 +128,12 @@ def main():
         print(f"[+] Spawned Child Processes: {len(dyn_results['spawned_processes'])}")
         print(f"[+] Dropped/Modified Files : {len(dyn_results['dropped_files'])}")
         print(f"[+] Registry Run Changes   : {len(dyn_results['registry_modifications'])}")
+
+        fim_results = fim_scanner.take_post_execution()
+        if dyn_results and isinstance(dyn_results, dict):
+            dyn_results["file_integrity_monitoring"] = fim_results
+            if fim_results["dropper_behavior_confirmed"]:
+                print(f"[!] WARNING: FIM detected {len(fim_results['high_risk_executable_drops'])} high-risk executable drops!")
     else:
         print("\n[*] Phase 2: Dynamic Execution skipped (use --dynamic to enable).")
         dyn_results = {"execution_status": "Skipped (Static triage only)"}
@@ -113,15 +145,17 @@ def main():
         print(f"[+] Registry Changes Detected: {reg_diff_results['total_changes']}")
         if reg_diff_results["suspicious_persistence_detected"]:
             print(f"[!] WARNING: Suspicious Autorun Persistence Added ({len(reg_diff_results['added_entries'])} entries)!")
+        if dyn_results and isinstance(dyn_results, dict):
+            dyn_results["registry_differential"] = reg_diff_results
 
     if sinkhole_engine:
         sinkhole_telemetry = sinkhole_engine.stop()
         print(f"[+] Sinkhole Inbound Beacons Captured: {len(sinkhole_telemetry)}")
+        # Process via NIST SP 800-86 Network Forensics
+        nist_forensics = NISTNetworkForensics(sinkhole_telemetry).process()
+        print(f"[+] NIST SP 800-86 Assessment : {nist_forensics['summary']['threat_level']} (Evidence ID: {nist_forensics['evidence_id']})")
         if dyn_results and isinstance(dyn_results, dict):
-            dyn_results["network_sinkhole"] = sinkhole_telemetry
-
-    if reg_diff_results and dyn_results and isinstance(dyn_results, dict):
-        dyn_results["registry_differential"] = reg_diff_results
+            dyn_results["nist_network_forensics"] = nist_forensics
 
     # 3. Report Generation
     print("\n[*] Phase 3: Generating Intelligence Reports & YARA Signature...")
@@ -157,6 +191,15 @@ def main():
     print(f"[+] Machine-readable JSON Log  : {os.path.abspath(json_path)}")
     print(f"[+] Generated YARA Detection   : {os.path.abspath(yara_path)}")
     print("=" * 65)
+
+    # 4. Quarantine Vault Execution (if requested or if score >= 60)
+    if args.quarantine:
+        if os.path.exists(args.target):
+            print("\n[*] Executing Safe Quarantine Vault Isolation...")
+            q_res = vault.quarantine_sample(args.target, threat_info={"score": generator.score, "verdict": generator.verdict})
+            print(f"[+] Binary neutralised with XOR stream mask (Key: 0x5A)")
+            print(f"[+] Quarantined Vault Path: {q_res['quarantined_path']}")
+            print(f"[+] Original sample safely disarmed.")
 
 if __name__ == "__main__":
     main()

@@ -3,11 +3,12 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-v14-red.svg)](https://attack.mitre.org/)
+[![NIST SP 800-86](https://img.shields.io/badge/NIST%20SP%20800--86-Compliant-green.svg)](https://csrc.nist.gov/publications/detail/sp/800-86/final)
 [![AI-Agent Ready](https://img.shields.io/badge/AI--Agent-Ready-purple.svg)](#-agent-skill-integration)
 
-A lightweight, zero-configuration automated malware triage and behavioral analysis engine designed for security analysts, incident responders, and AI coding agents. 
+A lightweight, zero-configuration automated malware triage, behavioral analysis, and digital forensics engine designed for security analysts, incident responders, and AI coding agents. 
 
-Inspired by classical malware analysis methodologies (*Practical Malware Analysis* by Sikorski & Honig), modern automated sandboxing (*Cuckoo Sandbox*), and Indonesian cybersecurity training curricula (*Syai Labs*), this engine provides instant static triage, PE section entropy analysis, MITRE ATT&CK capability mapping, isolated dynamic behavioral monitoring, local C2 network sinkholing, registry differential tracking, and auto-generates actionable **YARA detection rules** alongside a visual **interactive HTML dashboard**.
+Inspired by classical malware analysis methodologies (*Practical Malware Analysis* by Sikorski & Honig), modern automated sandboxing (*Cuckoo Sandbox*), Indonesian cybersecurity training curricula (*Syai Labs*), and digital network forensics research (*NIST SP 800-86*), this engine provides instant static triage, PE section entropy analysis, MITRE ATT&CK capability mapping, isolated dynamic behavioral monitoring, local C2 network sinkholing, registry differential tracking, safe **Quarantine Vault** isolation, and auto-generates actionable **YARA detection rules** alongside an **interactive HTML dashboard**.
 
 ---
 
@@ -16,6 +17,11 @@ Inspired by classical malware analysis methodologies (*Practical Malware Analysi
 - ⚡ **Instant Static Triage:** Computes cryptographic hashes (MD5, SHA-1, SHA-256), Import Hash (`imphash`), and inspects PE headers, ASLR, DEP/NX, and SafeSEH flags.
 - 📐 **Shannon Entropy Section Analysis:** Calculates mathematical entropy ($0.0 - 8.0$) across PE sections to reliably identify packed or encrypted binaries (UPX, Themida, ASPack, MPRESS).
 - 📦 **Packer & Compiler Detection (`core/packer_detector.py`):** Identifies runtime environments (.NET CLR, Go, Rust, GCC/MinGW, MSVC) and common packers (UPX, Themida, ASPack, MPRESS, VMProtect) inspired by Detect It Easy (DIE).
+- 🔒 **Quarantine Vault Engine (`core/quarantine_vault.py`):** Safely neutralizes malicious binaries using XOR stream obfuscation (Key: `0x5A`), renaming files to `.quarantined` to prevent accidental OS execution, backed by an encrypted ledger and seamless restore capability.
+- 📡 **NIST SP 800-86 Network Forensics (`core/network_forensics.py`):** Automatically structures C2 sinkhole telemetry through the 4 standard NIST forensic phases: *Collection $\rightarrow$ Examination $\rightarrow$ Analysis $\rightarrow$ Reporting*.
+- 📂 **File Integrity Monitoring (`core/file_integrity.py`):** Pre- and post-execution differential scanning across sensitive system paths (`%TEMP%`, `%APPDATA%`) to catch dropped payloads, secondary executables, and masquerading DLLs.
+- 🗄️ **Registry Differential Engine (`core/registry_diff.py`):** Pre- and post-execution snapshot comparison (Regshot technique) to catch sneaky autoruns across `HKCU` and `HKLM`.
+- 🌐 **Network Sinkhole & C2 Simulator (`core/network_sinkhole.py`):** Emulates local C2 HTTP listeners (ApateDNS & INetSim technique) to capture beacons and exfiltration attempts safely.
 - 🎯 **MITRE ATT&CK Behavioral Mapping:** Automatically categorizes Import Address Table (IAT) calls into attack techniques:
   - *Process Injection (`T1055`)*
   - *Anti-Debugging & Sandbox Evasion (`T1497 / T1622`)*
@@ -23,9 +29,6 @@ Inspired by classical malware analysis methodologies (*Practical Malware Analysi
   - *Input Capture & Keylogging (`T1056.001`)*
   - *C2 / Downloader Operations (`T1071 / T1105`)*
   - *Ransomware Cryptography (`T1486`)*
-- 🔬 **Dynamic Behavioral Sandbox:** Bounded, controlled execution monitoring child process trees (`psutil`), temporary file drops in `%TEMP%`, and registry `Run`/`RunOnce` persistence diffing.
-- 🗄️ **Registry Differential Engine (`core/registry_diff.py`):** Pre- and post-execution snapshot comparison (Regshot technique) to catch sneaky autoruns across `HKCU` and `HKLM`.
-- 🌐 **Network Sinkhole & C2 Simulator (`core/network_sinkhole.py`):** Emulates local C2 HTTP listeners (ApateDNS & INetSim technique) to capture beacons and exfiltration attempts safely.
 - 📝 **Automated YARA Rule Generation:** Automatically synthesizes custom, syntax-valid YARA detection rules tailored to the analyzed sample.
 - 📊 **Multi-Format Reporting:** Produces both an **Interactive Dark-Theme HTML Dashboard** and a structured **JSON report** ready for SIEM / EDR ingestion.
 - 🤖 **AI-Agent Ready:** Bundled with an official `SKILL.md` for seamless integration into agentic workflows (Antigravity, Cursor, Claude Code).
@@ -61,10 +64,16 @@ Perform a deep static triage and generate reports in seconds:
 python sandbox_cli.py "C:\path\to\sample.exe"
 ```
 
-### 3. Run Full Dynamic Behavioral Sandbox with Registry Diff & Sinkhole
-Execute the sample in a controlled, monitored sandbox with C2 simulation and registry diffing:
+### 3. Run Full Dynamic Behavioral Sandbox with FIM, Sinkhole & Quarantine
+Execute the sample in a controlled sandbox with C2 simulation, registry diffing, and safe quarantine:
 ```bash
-python sandbox_cli.py "C:\path\to\sample.exe" --dynamic --timeout 15 --reg-diff --sinkhole --outdir reports
+python sandbox_cli.py "C:\path\to\sample.exe" --dynamic --timeout 15 --reg-diff --sinkhole --quarantine --outdir reports
+```
+
+### 4. Restore Quarantined Sample
+If a file was quarantined and needs to be restored to disk:
+```bash
+python sandbox_cli.py --restore "<quarantined_filename_or_hash>" --restore-dir restored_samples
 ```
 
 All analysis artifacts are saved in the `reports/` directory:
@@ -101,24 +110,11 @@ You can mount this skill into your AI coding assistant (Antigravity, Cursor, or 
 cp -r skills/malware-triage ~/.gemini/config/skills/
 ```
 
-Once loaded, you can ask your AI agent naturally:
-> *"Triage this suspicious binary using the malware-triage skill and generate a YARA rule for our SOC."*
-
----
-
-## 📊 Sample Threat Scoring
-
-| Score Range | Verdict | Interpretation |
-| :--- | :--- | :--- |
-| **0 – 29** | `CLEAN / BENIGN` | Standard software without suspicious behavioral capabilities. |
-| **30 – 59** | `SUSPICIOUS` | Packed sections, potentially unwanted behaviors, or evasion techniques. |
-| **60 – 100** | `MALICIOUS` | High-risk capabilities (Process injection, keylogging hooks, persistence). |
-
 ---
 
 ## 🧪 Testing
 
-Run unit tests:
+Run unit tests across the entire test suite:
 ```bash
 python -m unittest discover tests
 ```
@@ -127,13 +123,15 @@ python -m unittest discover tests
 
 ## 🙏 Credits & Special Dedication
 
-Special dedication and credits to **Yohanes Syailendra Kotualubun, M.Kom, CEH, ECSA, CCNA (Pak Syai)**:
-* Senior Cybersecurity Consultant & Threat Hunter.
-* Researcher at **Indonesia Honeynet Project (IHP)** — Malware Stream.
-* 3-time Winner of **Cyber Defence Competition Kementerian Pertahanan RI (Kemhan)** (2013, 2014, 2015).
-* Faculty Member at Swiss German University (SGU).
-
-His foundational workshop materials and hands-on lab methodology (**Syai Labs**) served as a direct inspiration for the architecture, educational documentation, and triage techniques implemented in this project.
+Special dedication and credits to:
+1. **Yohanes Syailendra Kotualubun, M.Kom, CEH, ECSA, CCNA (Pak Syai)**:
+   * Senior Cybersecurity Consultant & Threat Hunter.
+   * Researcher at **Indonesia Honeynet Project (IHP)** — Malware Stream.
+   * 3-time Winner of **Cyber Defence Competition Kementerian Pertahanan RI (Kemhan)** (2013, 2014, 2015).
+   * His foundational **Syai Labs** workshop materials served as a direct inspiration for the architecture and educational curriculum.
+2. **Achmad Nafik, Haggi Julian Ahcmad, & Muhammad Rosyid**:
+   * Researchers at Universitas Amikom Yogyakarta.
+   * Authors of *"Pengembangan Forensik Jaringan Menggunakan Metode NIST di Era Modern"*, which directly inspired the NIST SP 800-86 4-phase network forensics audit module in this engine.
 
 ---
 
