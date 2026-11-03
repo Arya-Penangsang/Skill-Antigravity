@@ -27,9 +27,30 @@ def main():
     print(f"[*] Target Sample : {target_name}")
     print(f"[*] Full Path     : {args.target}")
 
+    sample_data = None
+    analyzed_name = target_name
+
+    # Support in-memory zip analysis (avoids host AV interception)
+    if args.target.lower().endswith(".zip"):
+        import zipfile
+        print("\n[*] Detected ZIP archive. Inspecting in-memory without disk extraction...")
+        with zipfile.ZipFile(args.target, 'r') as zf:
+            exes = [n for n in zf.namelist() if n.lower().endswith(('.exe', '.dll', '.bin'))]
+            if exes:
+                selected_sample = exes[0]
+                print(f"[+] Found binary inside archive: {selected_sample}")
+                sample_data = zf.read(selected_sample)
+                analyzed_name = os.path.basename(selected_sample)
+            else:
+                print("[-] No executable binary found inside zip archive.")
+                sys.exit(1)
+
     # 1. Static Triage
     print("\n[*] Phase 1: Running Static Deep Analysis...")
-    analyzer = StaticAnalyzer(args.target)
+    if sample_data:
+        analyzer = StaticAnalyzer(data=sample_data, sample_name=analyzed_name)
+    else:
+        analyzer = StaticAnalyzer(file_path=args.target)
     hashes = analyzer.get_hashes()
     pe_header = analyzer.analyze_pe_headers()
     sections = analyzer.analyze_sections()

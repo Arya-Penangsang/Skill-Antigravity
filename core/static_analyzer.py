@@ -6,11 +6,19 @@ from datetime import datetime
 import pefile
 
 class StaticAnalyzer:
-    def __init__(self, file_path):
-        self.file_path = file_path
-        self.file_name = os.path.basename(file_path)
-        with open(file_path, "rb") as f:
-            self.data = f.read()
+    def __init__(self, file_path=None, data=None, sample_name=None):
+        if data is not None:
+            self.data = data
+            self.file_name = sample_name or "in_memory_sample.bin"
+            self.file_path = file_path or self.file_name
+        elif file_path:
+            self.file_path = file_path
+            self.file_name = sample_name or os.path.basename(file_path)
+            with open(file_path, "rb") as f:
+                self.data = f.read()
+        else:
+            raise ValueError("Either file_path or data must be provided")
+
         self.pe = None
         try:
             self.pe = pefile.PE(data=self.data)
