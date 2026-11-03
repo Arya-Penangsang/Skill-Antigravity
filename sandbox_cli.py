@@ -4,12 +4,17 @@ import argparse
 from core.static_analyzer import StaticAnalyzer
 from core.dynamic_sandbox import DynamicSandbox
 from core.report_generator import ReportGenerator
+from core.packer_detector import PackerDetector
+from core.registry_diff import RegistryDiffEngine
+from core.network_sinkhole import NetworkSinkhole
 
 def main():
     parser = argparse.ArgumentParser(description="Antigravity Automated Malware Analysis Sandbox")
     parser.add_argument("target", help="Path to executable or file to analyze")
     parser.add_argument("--dynamic", action="store_true", help="Run in dynamic behavioral sandbox")
     parser.add_argument("--timeout", type=int, default=8, help="Timeout in seconds for dynamic sandbox execution")
+    parser.add_argument("--reg-diff", action="store_true", help="Take pre- and post-registry snapshots to detect persistence")
+    parser.add_argument("--sinkhole", action="store_true", help="Launch local simulated C2 DNS/HTTP sinkhole listener")
     parser.add_argument("--outdir", default="reports", help="Output directory for reports")
 
     args = parser.parse_args()
@@ -56,23 +61,39 @@ def main():
     sections = analyzer.analyze_sections()
     capabilities = analyzer.analyze_imports_and_capabilities()
     iocs = analyzer.extract_strings_and_iocs()
+    packer_info = analyzer.detect_packers()
     yara_rule = analyzer.generate_yara_rule()
 
     print(f"[+] SHA-256 : {hashes['sha256']}")
     print(f"[+] Imphash : {hashes['imphash']}")
     print(f"[+] Machine : {pe_header.get('machine', 'Unknown')}")
+    print(f"[+] Compiler: {packer_info['detected_compiler']}")
+    print(f"[+] Packers : {', '.join(packer_info['detected_packers'])}")
     print(f"[+] Sections: {len(sections)} detected")
 
     packed_count = sum(1 for s in sections if s["is_packed"])
-    if packed_count > 0:
-        print(f"[!] WARNING : {packed_count} sections detected with high entropy / packing!")
+    if packed_count > 0 or packer_info["is_packed"]:
+        print(f"[!] WARNING : Sample exhibits packed characteristics / high entropy sections!")
 
     print(f"[+] Capabilities Matched: {len(capabilities['capabilities'])} behavioral categories")
     for cap in capabilities['capabilities']:
         print(f"    - [{cap['risk']} Risk] {cap['category']} (MITRE {cap['mitre']})")
 
-    # 2. Dynamic Sandbox
+    # 2. Dynamic Sandbox & Registry Diff
     dyn_results = None
+    sinkhole_engine = None
+    if args.sinkhole:
+        print("\n[*] Starting Local C2 Network Sinkhole Listener (127.0.0.1:8080)...")
+        sinkhole_engine = NetworkSinkhole(http_port=8080)
+        sinkhole_engine.start()
+
+    reg_diff_results = None
+    reg_engine = None
+    if args.reg_diff:
+        print("\n[*] Taking Registry Pre-Execution Baseline Snapshot...")
+        reg_engine = RegistryDiffEngine()
+        reg_engine.take_pre_snapshot()
+
     if args.dynamic:
         print(f"\n[*] Phase 2: Running Dynamic Behavioral Sandbox ({args.timeout}s timeout)...")
         sandbox = DynamicSandbox(args.target, timeout_seconds=args.timeout)
@@ -85,6 +106,23 @@ def main():
         print("\n[*] Phase 2: Dynamic Execution skipped (use --dynamic to enable).")
         dyn_results = {"execution_status": "Skipped (Static triage only)"}
 
+    if reg_engine:
+        print("[*] Taking Registry Post-Execution Snapshot & Computing Diff...")
+        reg_engine.take_post_snapshot()
+        reg_diff_results = reg_engine.compute_diff()
+        print(f"[+] Registry Changes Detected: {reg_diff_results['total_changes']}")
+        if reg_diff_results["suspicious_persistence_detected"]:
+            print(f"[!] WARNING: Suspicious Autorun Persistence Added ({len(reg_diff_results['added_entries'])} entries)!")
+
+    if sinkhole_engine:
+        sinkhole_telemetry = sinkhole_engine.stop()
+        print(f"[+] Sinkhole Inbound Beacons Captured: {len(sinkhole_telemetry)}")
+        if dyn_results and isinstance(dyn_results, dict):
+            dyn_results["network_sinkhole"] = sinkhole_telemetry
+
+    if reg_diff_results and dyn_results and isinstance(dyn_results, dict):
+        dyn_results["registry_differential"] = reg_diff_results
+
     # 3. Report Generation
     print("\n[*] Phase 3: Generating Intelligence Reports & YARA Signature...")
     generator = ReportGenerator(
@@ -93,7 +131,8 @@ def main():
             "pe_header": pe_header,
             "sections": sections,
             "capabilities": capabilities,
-            "iocs": iocs
+            "iocs": iocs,
+            "packer_info": packer_info
         },
         dynamic_data=dyn_results,
         yara_rule=yara_rule,

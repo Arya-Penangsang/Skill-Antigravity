@@ -213,6 +213,11 @@ class StaticAnalyzer:
             "suspicious_indicators": suspicious_words[:15]
         }
 
+    def detect_packers(self):
+        from .packer_detector import PackerDetector
+        detector = PackerDetector(self.data)
+        return detector.analyze()
+
     def generate_yara_rule(self, threat_name=None):
         hashes = self.get_hashes()
         threat_name = threat_name or "Malware_" + hashes["sha256"][:8]
