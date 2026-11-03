@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Output directories & caches
+reports/
+.pytest_cache/
+*.tmp
+*.log
+*.bak
+
+# Environment & IDEs
+.env
+.venv
+env/
+venv/
+.idea/
+.vscode/
