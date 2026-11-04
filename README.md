@@ -1,145 +1,160 @@
-# 🛡️ Antigravity Malware Sandbox & Automated Triage Engine
+# 🛡️ Skill-Antigravity: Complete Cybersecurity & Threat Operations Suite
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-v14-red.svg)](https://attack.mitre.org/)
-[![NIST SP 800-86](https://img.shields.io/badge/NIST%20SP%20800--86-Compliant-green.svg)](https://csrc.nist.gov/publications/detail/sp/800-86/final)
-[![AI-Agent Ready](https://img.shields.io/badge/AI--Agent-Ready-purple.svg)](#-agent-skill-integration)
+[![Author: Nafik](https://img.shields.io/badge/Author-Nafik-blue.svg)](https://github.com/nafik-cs)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![PHP 8.0+](https://img.shields.io/badge/PHP-8.0+-777BB4.svg?logo=php&logoColor=white)](https://www.php.net/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-Enterprise%20%26%20Web-red.svg)](https://attack.mitre.org/)
+[![NIST Compliance](https://img.shields.io/badge/NIST-SP%20800--86%20%7C%20800--115-green.svg)](https://csrc.nist.gov/)
+[![OWASP Aligned](https://img.shields.io/badge/OWASP-Top%2010%20%7C%20ASVS%20v4.0-orange.svg)](https://owasp.org/)
+[![AI-Agent Ready](https://img.shields.io/badge/AI--Agent-Antigravity%20Ready-purple.svg)](#-integrasi-ke-antigravity)
 
-A lightweight, zero-configuration automated malware triage, behavioral analysis, and digital forensics engine designed for security analysts, incident responders, and AI coding agents. 
+**Skill-Antigravity** adalah repositori resmi kumpulan modul dan keahlian (*skillset*) keamanan siber komprehensif untuk **Google Antigravity AI Agent** dan analis keamanan profesional. 
 
-Inspired by classical malware analysis methodologies (*Practical Malware Analysis* by Sikorski & Honig), modern automated sandboxing (*Cuckoo Sandbox*), Indonesian cybersecurity training curricula (*Syai Labs*), and digital network forensics research (*NIST SP 800-86*), this engine provides instant static triage, PE section entropy analysis, MITRE ATT&CK capability mapping, isolated dynamic behavioral monitoring, local C2 network sinkholing, registry differential tracking, safe **Quarantine Vault** isolation, and auto-generates actionable **YARA detection rules** alongside an **interactive HTML dashboard**.
+Dikembangkan oleh **Nafik** ([@nafik-cs](https://github.com/nafik-cs)), repositori ini menggabungkan seluruh spektrum pertahanan dan pengujian keamanan siber modern: **Offensive Operations (Red Team)**, **Defensive Hardening (Blue Team)**, **Continuous Validation (Purple Team)**, **Digital Forensics & Incident Response (DFIR)**, **Automated Malware Sandboxing & Quarantine Vault**, serta **Multi-Target Binary Reverse Engineering (REA)**.
 
----
-
-## ✨ Key Features & Architecture
-
-- ⚡ **Instant Static Triage:** Computes cryptographic hashes (MD5, SHA-1, SHA-256), Import Hash (`imphash`), and inspects PE headers, ASLR, DEP/NX, and SafeSEH flags.
-- 📐 **Shannon Entropy Section Analysis:** Calculates mathematical entropy ($0.0 - 8.0$) across PE sections to reliably identify packed or encrypted binaries (UPX, Themida, ASPack, MPRESS).
-- 📦 **Packer & Compiler Detection (`core/packer_detector.py`):** Identifies runtime environments (.NET CLR, Go, Rust, GCC/MinGW, MSVC) and common packers (UPX, Themida, ASPack, MPRESS, VMProtect) inspired by Detect It Easy (DIE).
-- 🔒 **Quarantine Vault Engine (`core/quarantine_vault.py`):** Safely neutralizes malicious binaries using XOR stream obfuscation (Key: `0x5A`), renaming files to `.quarantined` to prevent accidental OS execution, backed by an encrypted ledger and seamless restore capability.
-- 📡 **NIST SP 800-86 Network Forensics (`core/network_forensics.py`):** Automatically structures C2 sinkhole telemetry through the 4 standard NIST forensic phases: *Collection $\rightarrow$ Examination $\rightarrow$ Analysis $\rightarrow$ Reporting*.
-- 📂 **File Integrity Monitoring (`core/file_integrity.py`):** Pre- and post-execution differential scanning across sensitive system paths (`%TEMP%`, `%APPDATA%`) to catch dropped payloads, secondary executables, and masquerading DLLs.
-- 🗄️ **Registry Differential Engine (`core/registry_diff.py`):** Pre- and post-execution snapshot comparison (Regshot technique) to catch sneaky autoruns across `HKCU` and `HKLM`.
-- 🌐 **Network Sinkhole & C2 Simulator (`core/network_sinkhole.py`):** Emulates local C2 HTTP listeners (ApateDNS & INetSim technique) to capture beacons and exfiltration attempts safely.
-- 🎯 **MITRE ATT&CK Behavioral Mapping:** Automatically categorizes Import Address Table (IAT) calls into attack techniques:
-  - *Process Injection (`T1055`)*
-  - *Anti-Debugging & Sandbox Evasion (`T1497 / T1622`)*
-  - *Persistence Mechanisms (`T1547 / T1543`)*
-  - *Input Capture & Keylogging (`T1056.001`)*
-  - *C2 / Downloader Operations (`T1071 / T1105`)*
-  - *Ransomware Cryptography (`T1486`)*
-- 📝 **Automated YARA Rule Generation:** Automatically synthesizes custom, syntax-valid YARA detection rules tailored to the analyzed sample.
-- 📊 **Multi-Format Reporting:** Produces both an **Interactive Dark-Theme HTML Dashboard** and a structured **JSON report** ready for SIEM / EDR ingestion.
-- 🤖 **AI-Agent Ready:** Bundled with an official `SKILL.md` for seamless integration into agentic workflows (Antigravity, Cursor, Claude Code).
+📄 **Dokumentasi Lengkap (PDF Ringkasan Eksekutif):**  
+[Unduh Ringkasan_Skill_Cybersecurity_Antigravity.pdf](Ringkasan_Skill_Cybersecurity_Antigravity.pdf)
 
 ---
 
-## 📚 Community & Educational Resources
+## 🏛️ Arsitektur & Taksonomi Modul Keamanan
 
-We have packaged open learning materials inspired by top-tier Indonesian cybersecurity workshops:
-
-* 🎓 **[Kurikulum Terbuka Analisis Malware Indonesia (Full Curriculum)](docs/MALWARE_ANALYSIS_CURRICULUM_ID.md)**  
-  Silabus komprehensif 5 modul mulai dari struktur PE, triage statis, analisis dinamis, reverse engineering assembly, hingga rekayasa YARA.
-* 🔍 **[Writeup Reverse Engineering: CrackMe 1.0](docs/CRACKME_REVERSE_ENGINEERING_WRITEUP.md)**  
-  Panduan praktis langkah-demi-langkah membongkar biner .NET CLR, deobfuscation user strings `#US`, dan binary patching bypass.
-* 🏗️ **[Blueprint Setup Lab Terisolasi (Air-Gapped Sandbox)](docs/ISOLATED_SANDBOX_BLUEPRINT.md)**  
-  Arsitektur lab aman menggunakan FLARE VM, REMnux/Kali Linux dengan simulasi gateway INetSim dan snapshot lifecycle.
-
----
-
-## 🚀 Quick Start
-
-### 1. Installation
-Clone the repository and install the lightweight dependencies:
-```bash
-git clone https://github.com/nafik-cs/antigravity-malware-sandbox.git
-cd antigravity-malware-sandbox
-pip install -r requirements.txt
 ```
-
-### 2. Run Static Deep Triage
-Perform a deep static triage and generate reports in seconds:
-```bash
-python sandbox_cli.py "C:\path\to\sample.exe"
-```
-
-### 3. Run Full Dynamic Behavioral Sandbox with FIM, Sinkhole & Quarantine
-Execute the sample in a controlled sandbox with C2 simulation, registry diffing, and safe quarantine:
-```bash
-python sandbox_cli.py "C:\path\to\sample.exe" --dynamic --timeout 15 --reg-diff --sinkhole --quarantine --outdir reports
-```
-
-### 4. Restore Quarantined Sample
-If a file was quarantined and needs to be restored to disk:
-```bash
-python sandbox_cli.py --restore "<quarantined_filename_or_hash>" --restore-dir restored_samples
-```
-
-All analysis artifacts are saved in the `reports/` directory:
-- `reports/<sample>_report.html` (Interactive visual dashboard)
-- `reports/<sample>_report.json` (Machine-readable SIEM log)
-- `reports/<sample>_rule.yar` (Auto-generated YARA detection signature)
-
----
-
-## 🔬 Real-World Showcase: In-Memory Triage Case Study
-
-Included in the [`examples/`](examples/) directory is a real-world case study triaging an unverified activation binary (`KMSAuto++ x64.exe`, 40.9 MB) extracted safely via in-memory streaming:
-
-| Metric | Result |
-| :--- | :--- |
-| **Threat Score** | 🔥 **`100 / 100`** (`MALICIOUS`) |
-| **Architecture** | AMD64 (64-bit x64 PE) |
-| **SHA-256** | `4eb7d3d117382ee6935ee6d3e5902e44523e7529455e9a3d3c9daf035fa507ac` |
-| **Imphash** | `3b4bcc6db16a1a25e1c9cd8e1cf93242` |
-| **MITRE Techniques** | • *T1056.001 (Input Capture / Keylogging)*: `SetWindowsHookEx`, `GetAsyncKeyState`<br>• *T1547 / T1543 (Persistence)*: `CreateService`, `RegSetValueEx`<br>• *T1497 (Anti-Debugging Evasion)*: `CheckRemoteDebuggerPresent`<br>• *T1071 / T1105 (C2 Downloader)*: `InternetOpen`, `URLDownloadToFile` |
-
-- 📊 **[View Sample HTML Dashboard](examples/sample_triage_report.html)**
-- 📝 **[View Generated YARA Rule](examples/sample_detection.yar)**
-- 📋 **[View Structured JSON Report](examples/sample_triage_report.json)**
-
----
-
-## 🤖 Agent Skill Integration
-
-This repository includes a native agent skill located in `skills/malware-triage/SKILL.md`.
-
-You can mount this skill into your AI coding assistant (Antigravity, Cursor, or Claude Code) by copying it to your agent's skills directory:
-```bash
-cp -r skills/malware-triage ~/.gemini/config/skills/
+Skill-Antigravity/
+├── Ringkasan_Skill_Cybersecurity_Antigravity.pdf # Laporan Eksekutif Resmi (7 Halaman)
+├── sandbox_cli.py                              # CLI Utama Automated Malware Sandbox
+├── core/                                       # Core Engine Malware Sandbox & Quarantine Vault
+├── docs/                                       # Kurikulum & Dokumentasi Teknis
+├── skills/
+│   ├── malware-triage/                         # 🦠 Analisis Malware, Entropi, Vault & NIST DFIR
+│   ├── digital-forensics/                      # 🕵️ DFIR Disk Carving, RAM Volatility, USB & Sigma
+│   ├── infra-red-teaming/                      # ⚔️ Network Scanning, PrivEsc, SMB/SNMP & CEH v11
+│   ├── web-purple-teaming/                     # 🟣 Validasi Deteksi Kontinu & Orkestrator Triad
+│   ├── web-red-teaming/                        # 🔴 Web Penetration Testing (OWASP Top 10 / ASVS)
+│   ├── web-blue-teaming/                       # 🔵 Hardening Server, CIS Benchmarks & WAF
+│   └── reverse-engineer-anything/              # 🔬 Decompilasi Biner & Instrumentasi Dinamis Frida
 ```
 
 ---
 
-## 🧪 Testing
+## 📦 Katalog Skillset & Kemampuan Utama
 
-Run unit tests across the entire test suite:
-```bash
-python -m unittest discover tests
-```
-
----
-
-## 🙏 Credits & Special Dedication
-
-Special dedication and credits to:
-1. **Yohanes Syailendra Kotualubun, M.Kom, CEH, ECSA, CCNA (Pak Syai)**:
-   * Senior Cybersecurity Consultant & Threat Hunter.
-   * Researcher at **Indonesia Honeynet Project (IHP)** — Malware Stream.
-   * 3-time Winner of **Cyber Defence Competition Kementerian Pertahanan RI (Kemhan)** (2013, 2014, 2015).
-   * His foundational **Syai Labs** workshop materials served as a direct inspiration for the architecture and educational curriculum.
-2. **Achmad Nafik, Haggi Julian Ahcmad, & Muhammad Rosyid**:
-   * Researchers at Universitas Amikom Yogyakarta.
-   * Authors of *"Pengembangan Forensik Jaringan Menggunakan Metode NIST di Era Modern"*, which directly inspired the NIST SP 800-86 4-phase network forensics audit module in this engine.
+### 1. 🦠 Malware Triage & DFIR Sandbox (`skills/malware-triage`)
+* **Standar Acuan:** NIST SP 800-86, MITRE ATT&CK for Enterprise.
+* **Fitur Utama:**
+  * **Static PE Triage:** MD5, SHA1, SHA256, Imphash, mitigasi memori PE (ASLR, DEP, SafeSEH).
+  * **Analisis Entropi Shannon ($0.0 - 8.0$):** Deteksi kompresi dan enkripsi payload (UPX, Themida, VMProtect).
+  * **Quarantine Vault Engine:** Menetralkan biner otomatis dengan XOR stream mask (Key: `0x5A`) ke format `.quarantined`.
+  * **Dynamic Behavior & Registry Diff:** Deteksi persistensi Run/RunOnce dan pelacakan dropper di `%TEMP%` / `%APPDATA%`.
+  * **C2 Network Sinkhole:** Menangkap koneksi beacon HTTP/DNS dan menstrukturkan log ke 4 fase NIST.
+  * **Automated YARA Rule Generator:** Sintesis aturan deteksi biner secara instan.
+* **Perintah CLI:**
+  ```bash
+  python sandbox_cli.py "sample.exe" --dynamic --timeout 15 --reg-diff --sinkhole --quarantine --outdir reports
+  ```
 
 ---
 
-## ⚖️ Disclaimer
-
-This project is developed strictly for **educational, defensive security research, and authorized malware triage purposes only**. The authors assume no liability for misuse or damage caused by analyzing malicious samples. Always execute untrusted software in an isolated virtualized environment.
+### 2. 🕵️ Digital Forensics & Incident Response (`skills/digital-forensics`)
+* **Standar Acuan:** NIST SP 800-86, ISO/IEC 27037, RFC 3227 (*Order of Volatility*).
+* **Fitur Utama:**
+  * **File Carving Otomatis:** Ekstraksi berkas terhapus dari citra raw disk (`.raw`, `.dd`, `.001`, `.E01`) via *Magic Bytes* (JPEG, PDF, ZIP, Office, PE MZ).
+  * **Forensik Memori RAM:** Rekonstruksi proses via Volatility 3 (`windows.pslist`, `pstree`), deteksi injeksi kode tersembunyi (`malfind`), dan soket aktif (`netscan`).
+  * **Pelacakan Flashdisk (USBSTOR Forensics):** Audit registri Windows `HKLM\SYSTEM\CurrentControlSet\Enum\USBSTOR` untuk membuktikan kebocoran data internal (*insider threat*).
+  * **Windows Event Log Forensics:** Analisis Event ID 4624 (Logon), 4625 (Brute force), 4688 (Process Creation), 7045 (New Service), 1102 (Log Cleared).
+  * **Sigma YAML Generator:** Menghasilkan template aturan deteksi insiden untuk SIEM/EDR.
+* **Perintah CLI:**
+  ```bash
+  python skills/digital-forensics/scripts/forensic_triage.py --audit-usb
+  python skills/digital-forensics/scripts/forensic_triage.py --carve evidence.raw --outdir carved_files
+  python skills/digital-forensics/scripts/forensic_triage.py --gen-sigma --title "Deteksi Ransomware" --process "vssadmin.exe delete shadows"
+  ```
 
 ---
 
-## 📄 License
-This project is licensed under the [MIT License](LICENSE).
+### 3. ⚔️ Infrastructure Red Teaming & CEH (`skills/infra-red-teaming`)
+* **Standar Acuan:** CEH (Certified Ethical Hacker v10/v11), NIST SP 800-115, MITRE ATT&CK for Enterprise.
+* **Fitur Utama:**
+  * **Multi-threaded Port Scanner & Banner Grabbing:** Pemindaian TCP cepat berkecepatan tinggi.
+  * **Firewall Evasion Scanning:** Teknik TCP SYN Stealth (`-sS`), TCP ACK (`-sA`), dan Inverse TCP (Xmas, Null, FIN) berbasis RFC 793.
+  * **Local Privilege Escalation (LPE) Auditor:** Pengecekan otomatis miskonfigurasi Linux SUID / Capabilities serta Windows Token Manipulation (`SeImpersonatePrivilege` / Potato family).
+  * **SMB & Service Enumeration:** Pengecekan *Null Session* pada `IPC$` (Port 445/139) dan SNMP MIB walking (Port 161).
+  * **Simulasi MITM:** ARP Spoofing dan sniffing LLMNR/NBT-NS via Responder.
+* **Perintah CLI:**
+  ```bash
+  python skills/infra-red-teaming/scripts/infra_audit.py --scan 192.168.1.1 --ports 21,22,80,443,445,3389
+  python skills/infra-red-teaming/scripts/infra_audit.py --audit-privesc
+  python skills/infra-red-teaming/scripts/infra_audit.py --smb-check 192.168.1.50
+  ```
+
+---
+
+### 4. 🟣 Web Purple Teaming & Continuous Validation (`skills/web-purple-teaming`)
+* **Standar Acuan:** MITRE ATT&CK for Web Applications, NIST CSF 2.0.
+* **Fitur Utama:**
+  * **Siklus Orkestrasi 4 Tahap:** *Threat Emulation* ➔ *Detection Validation* ➔ *Remediation Tuning* ➔ *Regression Testing*.
+  * **Triad Orchestrator Script:** Mengintegrasikan serangan Red Team dan verifikasi Blue Team secara simultan.
+  * **Perhitungan Skor Ketahanan (Threat Resistance Score):** Mengukur efektivitas pertahanan secara kuantitatif.
+* **Perintah CLI:**
+  ```bash
+  php skills/web-purple-teaming/scripts/purple_orchestrator.php --path="/path/to/project" --target-url="http://target:port"
+  ```
+
+---
+
+### 5. 🔴 Web Red Teaming (`skills/web-red-teaming`)
+* **Standar Acuan:** OWASP Top 10:2021, OWASP ASVS v4.0.
+* **Fitur Utama:**
+  * Pemindaian otomatis kerentanan injeksi: SQL Injection (SQLi), Cross-Site Scripting (XSS), IDOR, SSRF, dan CSRF.
+  * Deteksi kebocoran berkas sensitif: `.env`, `.git`, `.htaccess`, database dump `.sql`.
+  * Deteksi webshell, trojan PHP, dan CVE backdoor bawaan via `scan_webshell_cve.php`.
+* **Perintah CLI:**
+  ```bash
+  php skills/web-red-teaming/scripts/audit_target.php --url="http://localhost:8080"
+  php skills/web-red-teaming/scripts/scan_webshell_cve.php --dir="/var/www/html"
+  ```
+
+---
+
+### 6. 🔵 Web Blue Teaming (`skills/web-blue-teaming`)
+* **Standar Acuan:** CIS Benchmarks, OWASP Defense in Depth, BSSN.
+* **Fitur Utama:**
+  * Audit konfigurasi keamanan aplikasi web (PHP, Apache, Nginx).
+  * Penguatan HTTP Security Headers: Content Security Policy (CSP), Strict-Transport-Security (HSTS), X-Frame-Options.
+  * Sandboxing direktori upload media (pencegahan eksekusi biner/PHP berbahaya).
+* **Perintah CLI:**
+  ```bash
+  php skills/web-blue-teaming/scripts/hardening_checker.php --path="/path/to/project"
+  ```
+
+---
+
+### 7. 🔬 Reverse Engineer Anything (`skills/reverse-engineer-anything`)
+* **Standar Acuan:** Binary Static & Dynamic Reverse Engineering Standards.
+* **Fitur Utama:**
+  * Analisis biner lintas arsitektur: x86/x64, ARM, PE (Windows), ELF (Linux), Mach-O (macOS).
+  * Managed & Web Applications: .NET CLR assemblies, Go, Rust, Java/DEX, Electron ASAR, dan Webpack JS.
+  * Dynamic Instrumentation Engine: Hooking fungsi memori secara langsung menggunakan Frida toolkit.
+
+---
+
+## 🚀 Integrasi ke Google Antigravity
+
+Untuk mengaktifkan seluruh modul ini langsung pada asisten AI Antigravity Anda:
+
+1. **Kloning atau Salin Modul ke Direktori Konfigurasi Antigravity:**
+   ```bash
+   # Salin seluruh folder skills ke folder skill global Antigravity:
+   cp -r skills/* ~/.gemini/config/skills/
+   ```
+2. **Restart Antigravity / Buka Sesi Baru:**
+   Asisten secara otomatis akan mendeteksi ke-7 skill ini dan langsung menggunakannya saat diperintahkan untuk melakukan analisis keamanan, audit penetrasi, atau forensik digital.
+
+---
+
+## 👨‍💻 Kontributor & Lisensi
+
+* **Lead Security Researcher & Creator:** **Nafik** ([@nafik-cs](https://github.com/nafik-cs))
+* **AI Security Pair:** Google Antigravity
+* **Lisensi:** Proyek ini dirilis di bawah lisensi [MIT License](LICENSE).

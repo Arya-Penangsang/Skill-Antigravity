@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Dokumentasi & Ringkasan Skill Keamanan Siber Antigravity</title>
+<style>
+  @page {
+    size: A4;
+    margin: 12mm 12mm 12mm 12mm;
+    @bottom-left {
+      content: "Dokumentasi Skillset Keamanan Siber • Lead Researcher: Nafik";
+      font-size: 7.5pt;
+      color: #94a3b8;
+    }
+    @bottom-right {
+      content: "Halaman " counter(page);
+      font-size: 7.5pt;
+      color: #94a3b8;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    background-color: #ffffff;
+    line-height: 1.45;
+    font-size: 9pt;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Cover Page */
+  .cover-page {
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 255mm;
+    padding: 20mm 14mm;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #0f2c59 100%);
+    color: #ffffff;
+  }
+
+  .cover-header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 15px;
+  }
+
+  .cover-tag {
+    display: inline-block;
+    background: rgba(99, 102, 241, 0.35);
+    color: #c7d2fe;
+    border: 1px solid rgba(165, 180, 252, 0.4);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+
+  .cover-title {
+    font-size: 26pt;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 12px 0;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+  }
+
+  .cover-subtitle {
+    font-size: 12pt;
+    color: #cbd5e1;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .cover-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 28px 0;
+  }
+
+  .stat-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 22pt;
+    font-weight: 800;
+    color: #38bdf8;
+    margin-bottom: 3px;
+  }
+
+  .stat-label {
+    font-size: 7.5pt;
+    text-transform: uppercase;
+    color: #94a3b8;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+  }
+
+  .cover-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5pt;
+    color: #94a3b8;
+  }
+
+  /* Headings */
+  h1 {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #0f172a;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    border-left: 4px solid #3b82f6;
+    padding-left: 8px;
+  }
+
+  h3 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 10px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    margin: 0 0 7px 0;
+    color: #334155;
+    text-align: justify;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .badge-red { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  .badge-blue { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+  .badge-purple { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+  .badge-amber { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+  .badge-emerald { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+  .badge-slate { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px 0;
+    font-size: 8pt;
+  }
+
+  th {
+    background-color: #0f172a;
+    color: #ffffff;
+    text-align: left;
+    padding: 6px 8px;
+    font-weight: 600;
+    font-size: 7.5pt;
+    letter-spacing: 0.3px;
+  }
+
+  td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td {
+    background-color: #f8fafc;
+  }
+
+  /* Code block */
+  pre, code {
+    font-family: "Consolas", "Courier New", monospace;
+  }
+
+  pre {
+    background-color: #0f172a;
+    color: #f8fafc;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 7.5pt;
+    line-height: 1.35;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 6px 0;
+    border-left: 3px solid #38bdf8;
+  }
+
+  code.inline {
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Grid & Cards */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 8px 0;
+  }
+
+  .card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 9px 11px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  }
+
+  .card-header {
+    font-weight: 700;
+    font-size: 8.5pt;
+    color: #0f172a;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-body {
+    font-size: 8pt;
+    color: #475569;
+  }
+
+  .callout {
+    background: #f0fdf4;
+    border-left: 4px solid #16a34a;
+    padding: 7px 10px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 8pt;
+    color: #166534;
+  }
+
+  .callout-purple {
+    background: #faf5ff;
+    border-left: 4px solid #8b5cf6;
+    padding: 7px 10px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 8pt;
+    color: #581c87;
+  }
+
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dotted #cbd5e1;
+    padding: 4px 0;
+    font-size: 8.5pt;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover-page">
+  <div class="cover-header">
+    <div class="cover-tag">Executive Summary & Technical Reference</div>
+    <div class="cover-title">DOKUMENTASI SKILLSET KEAMANAN SIBER & DFIR</div>
+    <div class="cover-subtitle">Katalog Lengkap Modul Custom Antigravity: Malware Analysis Sandbox, Digital Forensics (DFIR), Infrastructure Red Teaming, dan Triad Web Security Suite</div>
+  </div>
+
+  <div class="cover-stats">
+    <div class="stat-card">
+      <div class="stat-number">7</div>
+      <div class="stat-label">Security Skills</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Otomasi Script</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Standar Industri</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">MITRE</div>
+      <div class="stat-label">ATT&CK Aligned</div>
+    </div>
+  </div>
+
+  <div style="background: rgba(255,255,255,0.06); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.12);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+      <div style="font-weight: 700; font-size: 10pt; color: #38bdf8;">Ringkasan Inti Portofolio:</div>
+      <div style="font-size: 8pt; color: #cbd5e1; background: rgba(56, 189, 248, 0.2); padding: 2px 10px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.4);">
+        Author: <strong>Nafik</strong> (Lead Security Researcher)
+      </div>
+    </div>
+    <div style="font-size: 8.5pt; color: #cbd5e1; line-height: 1.5;">
+      Dokumen resmi ini merangkum seluruh skillset keamanan siber modular tingkat lanjut yang dikembangkan oleh <strong>Nafik</strong> bersama asisten <strong>Antigravity AI</strong>. Dokumen ini menyorot secara mendalam modul yang diselesaikan kemarin: <strong>Malware Triage & Quarantine Vault</strong>, <strong>Digital Forensics & Incident Response (DFIR)</strong>, dan <strong>Infrastructure Red Teaming (CEH)</strong>, serta integrasinya dengan ekosistem pertahanan web terpadu.
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div><strong>Lead Security Researcher:</strong> Nafik (<code>nafik@noname</code>)</div>
+    <div><strong>AI Engineering Pair:</strong> Antigravity AI</div>
+    <div><strong>Tanggal Terbit:</strong> 4 November 2026</div>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<h1>📑 1. Arsitektur & Taksonomi Modul Keamanan</h1>
+<p>
+Ekosistem pertahanan siber yang dibangun memadukan tiga pilar operasi: <strong>Offensive Operations (Red Teaming)</strong>, <strong>Defensive Hardening (Blue Teaming)</strong>, dan <strong>Forensic Investigation & Malware Sandbox (DFIR)</strong>. Seluruh modul didesain sesuai dengan kerangka kerja standar internasional: <em>NIST SP 800-86, NIST SP 800-115, ISO/IEC 27037, MITRE ATT&CK for Enterprise/Web,</em> dan <em>OWASP Top 10</em>.
+</p>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 7px 10px; font-size: 8pt;">
+  <div><strong>Lead Researcher:</strong> Nafik</div>
+  <div><strong>Role:</strong> Cyber Threat & DFIR Architect</div>
+  <div><strong>Workspace:</strong> ANTIGRAVIT PROJECT</div>
+</div>
+
+<div class="card" style="margin: 10px 0;">
+  <div class="card-header" style="border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">
+    <span>Daftar Isi Modul yang Dirangkum</span>
+    <span class="badge badge-purple">7 Modul Terpasang</span>
+  </div>
+  <div class="card-body" style="padding-top: 6px;">
+    <div class="toc-item"><span><strong>Modul 1:</strong> Malware Triage, Quarantine Vault & DFIR Sandbox (<code>malware-triage</code>)</span><span>Hal. 2</span></div>
+    <div class="toc-item"><span><strong>Modul 2:</strong> Digital Forensics & Incident Response Framework (<code>digital-forensics</code>)</span><span>Hal. 3</span></div>
+    <div class="toc-item"><span><strong>Modul 3:</strong> Infrastructure Red Teaming & CEH Framework (<code>infra-red-teaming</code>)</span><span>Hal. 4</span></div>
+    <div class="toc-item"><span><strong>Modul 4:</strong> Web Purple Teaming & Continuous Security Validation (<code>web-purple-teaming</code>)</span><span>Hal. 5</span></div>
+    <div class="toc-item"><span><strong>Modul 5:</strong> Web Red Teaming (<code>web-red-teaming</code>) & Web Blue Teaming (<code>web-blue-teaming</code>)</span><span>Hal. 6</span></div>
+    <div class="toc-item"><span><strong>Modul 6:</strong> Reverse Engineer Anything (<code>reverse-engineer-anything</code>) & Rekapitulasi CLI</span><span>Hal. 7</span></div>
+  </div>
+</div>
+
+<h3>Tabel Matriks Seluruh Skill Custom Keamanan</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Nama Skill</th>
+      <th>Kategori</th>
+      <th>Standar Rujukan</th>
+      <th>Script Otomasi Utama</th>
+      <th>Fungsi Strategis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>malware-triage</strong></td>
+      <td><span class="badge badge-amber">DFIR / Sandbox</span></td>
+      <td>NIST SP 800-86, MITRE ATT&CK</td>
+      <td><code>sandbox_cli.py</code></td>
+      <td>Triage PE biner, isolasi XOR vault, dynamic behavioral monitoring, sinkhole C2, YARA.</td>
+    </tr>
+    <tr>
+      <td><strong>digital-forensics</strong></td>
+      <td><span class="badge badge-emerald">Forensics</span></td>
+      <td>NIST SP 800-86, ISO/IEC 27037</td>
+      <td><code>forensic_triage.py</code></td>
+      <td>Audit USBSTOR registri, file carving magic bytes, memori Volatility 3, Sigma YAML rules.</td>
+    </tr>
+    <tr>
+      <td><strong>infra-red-teaming</strong></td>
+      <td><span class="badge badge-red">Red Team</span></td>
+      <td>CEH v10/v11, NIST SP 800-115</td>
+      <td><code>infra_audit.py</code></td>
+      <td>Multi-threaded port scan, audit privesc lokal (Linux/Windows), SMB/SNMP enum, MITM.</td>
+    </tr>
+    <tr>
+      <td><strong>web-purple-teaming</strong></td>
+      <td><span class="badge badge-purple">Purple Team</span></td>
+      <td>MITRE ATT&CK for Web, NIST CSF</td>
+      <td><code>purple_orchestrator.php</code></td>
+      <td>Orkestrasi Red + Blue, validasi deteksi kontinu, kalkulasi threat resistance score.</td>
+    </tr>
+    <tr>
+      <td><strong>web-red-teaming</strong></td>
+      <td><span class="badge badge-red">Red Team</span></td>
+      <td>OWASP Top 10:2021, ASVS v4.0</td>
+      <td><code>audit_target.php</code></td>
+      <td>Audit celah web (SQLi, XSS, CSRF, IDOR, SSRF), scan backdoor/webshell CVE.</td>
+    </tr>
+    <tr>
+      <td><strong>web-blue-teaming</strong></td>
+      <td><span class="badge badge-blue">Blue Team</span></td>
+      <td>CIS Benchmark, OWASP Defense</td>
+      <td><code>hardening_checker.php</code></td>
+      <td>Hardening server/CMS, security headers, WAF virtual patching, FIM file integrity.</td>
+    </tr>
+    <tr>
+      <td><strong>reverse-engineer-anything</strong></td>
+      <td><span class="badge badge-slate">REA / Binary</span></td>
+      <td>Reverse Engineering Artifacts</td>
+      <td>REA Toolset & Frida MCP</td>
+      <td>Decompilasi biner native/managed/JS, inspeksi simbol, instrumentasi dinamis Frida.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Karakteristik Desain:</strong> Seluruh modul dilengkapi instruksi mandiri di <code>SKILL.md</code>, tool otomatisasi (CLI), dan output terstruktur (HTML/JSON/YAML) yang dapat langsung diintegrasikan ke alur CI/CD maupun SIEM/EDR.
+</div>
+
+<!-- SECTION 2 -->
+<div class="page-break"></div>
+<h1>🦠 2. Deep Dive: Malware Triage & DFIR Sandbox</h1>
+<p>
+Modul <code>malware-triage</code> merupakan sistem otomatisasi analisis malware statis dan dinamis yang dilengkapi sistem karantina kriptografis (<em>Quarantine Vault</em>) dan telemetri jaringan berstandar NIST SP 800-86.
+</p>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <span>1. Analisis Statis & Deteksi Compiler</span>
+      <span class="badge badge-amber">Static Engine</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Hashing Lengkap:</strong> Menghasilkan MD5, SHA1, SHA256, dan Imphash (Import Hash) untuk pencocokan sampel biner sejenis.</li>
+        <li><strong>Inspeksi PE & Proteksi OS:</strong> Memeriksa mitigasi memori PE (ASLR, DEP/NX, SafeSEH, Authenticode Signature).</li>
+        <li><strong>Compiler & Packer Detection:</strong> Mendeteksi runtime GO, Rust, .NET CLR, serta packer seperti UPX dan Themida.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>2. Analisis Entropi Shannon (0.0 - 8.0)</span>
+      <span class="badge badge-amber">Entropy Math</span>
+    </div>
+    <div class="card-body">
+      Mengkalkulasi tingkat keacakan bit per seksi PE (<code>.text</code>, <code>.data</code>, <code>.rsrc</code>):
+      <ul>
+        <li><code>&lt; 6.5</code>: Kode program normal / tidak terenkripsi.</li>
+        <li><code>6.5 - 7.2</code>: Terkompresi (contoh: UPX packing).</li>
+        <li><code>&gt; 7.2</code>: Kuat dugaan payload terenkripsi (Ransomware / Packed).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <span>3. Quarantine Vault (Isolasi XOR 0x5A)</span>
+      <span class="badge badge-emerald">Aman & Terisolasi</span>
+    </div>
+    <div class="card-body">
+      Menetralkan biner berbahaya seketika dengan XOR stream mask (kunci <code>0x5A</code>) sehingga file tidak dapat dieksekusi oleh OS secara tidak sengaja, dicatat dalam encrypted ledger, serta dapat di-restore jika false positive.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>4. Dynamic Behavior & C2 Sinkhole</span>
+      <span class="badge badge-red">Sandbox Engine</span>
+    </div>
+    <div class="card-body">
+      Eksekusi terkontrol dengan timeout, snapshot diff registri (Run/RunOnce persistence), pelacakan dropper di <code>%TEMP%</code> / <code>%APPDATA%</code>, dan simulasi penangkap lalu lintas C2 via sinkhole listener lokal.
+    </div>
+  </div>
+</div>
+
+<h3>Alur Kerja 4 Tahap Telemetri Jaringan NIST SP 800-86</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Fase NIST</th>
+      <th>Aktivitas Eksekusi Sandbox</th>
+      <th>Artefak yang Dihasilkan</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Collection</strong></td>
+      <td>Mengaktifkan listener sinkhole port 80/53 lokal & buffer capture socket raw.</td>
+      <td>Raw Packet Capture Buffer & DNS requests log.</td>
+    </tr>
+    <tr>
+      <td><strong>2. Examination</strong></td>
+      <td>Dekode frame HTTP/DNS, parsing host header, user-agent, dan payload query.</td>
+      <td>Daftar domain C2 & struktur header HTTP tersangka.</td>
+    </tr>
+    <tr>
+      <td><strong>3. Analysis</strong></td>
+      <td>Pemetaan indikator C2 ke taktik MITRE ATT&CK (contoh: <code>T1071</code>, <code>T1105</code>).</td>
+      <td>Korelasi taktik & estimasi Threat Score (0 - 100).</td>
+    </tr>
+    <tr>
+      <td><strong>4. Reporting</strong></td>
+      <td>Penyusunan dashboard HTML visual interaktif dan aturan deteksi format YARA.</td>
+      <td><code>report.html</code>, <code>report.json</code>, dan <code>rules.yar</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Sintaks Penggunaan Perkakas CLI</h3>
+<pre>
+# Analisis statis cepat:
+python sandbox_cli.py "sample.exe"
+
+# Analisis dinamis penuh + diff registri + sinkhole capture + karantina biner:
+python sandbox_cli.py "sample.exe" --dynamic --timeout 15 --reg-diff --sinkhole --quarantine --outdir reports
+
+# Restore sampel dari karantina:
+python sandbox_cli.py --restore "sample.exe.vault" --restore-dir restored_samples
+</pre>
+
+<!-- SECTION 3 -->
+<div class="page-break"></div>
+<h1>🕵️ 3. Deep Dive: Digital Forensics & Incident Response (DFIR)</h1>
+<p>
+Modul <code>digital-forensics</code> menyediakan prosedur operasional penyelidikan insiden pasca-eksploitasi berbasis standar <strong>NIST SP 800-86</strong> dan <strong>ISO/IEC 27037</strong>, menjamin keabsahan bukti (<em>Chain of Custody</em>) dari memori, disk, hingga jejak registri pengguna.
+</p>
+
+<h3>Aturan Urutan Volatilitas Bukti (Order of Volatility - RFC 3227)</h3>
+<p>
+Urutan akuisisi bukti wajib memprioritaskan data yang paling cepat hilang saat sistem dimatikan:
+<br/>
+<code class="inline">Register / Cache CPU</code> &rarr; <code class="inline">Routing Table / ARP / Memori RAM</code> &rarr; <code class="inline">Temporary File System</code> &rarr; <code class="inline">Harddisk Fisik</code> &rarr; <code class="inline">Remote Log / SIEM</code>
+</p>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <span>1. Forensik Disk & File Carving</span>
+      <span class="badge badge-emerald">Disk Artifacts</span>
+    </div>
+    <div class="card-body">
+      Mengekstrak berkas terhapus dari raw disk dump (<code>.raw</code>, <code>.dd</code>, <code>.001</code>, <code>.E01</code>) berdasarkan pencocokan <em>Magic Bytes</em>:
+      <ul>
+        <li><strong>JPEG:</strong> <code>FF D8 FF</code> &rarr; <code>FF D9</code></li>
+        <li><strong>PDF:</strong> <code>25 50 44 46</code> (<code>%PDF</code>) &rarr; <code>25 25 45 4F 46</code> (<code>%%EOF</code>)</li>
+        <li><strong>ZIP / DOCX:</strong> <code>50 4B 03 04</code> &rarr; <code>50 4B 05 06</code></li>
+        <li><strong>Windows PE:</strong> <code>4D 5A</code> (<code>MZ</code>)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>2. Forensik Memori RAM (Volatility 3)</span>
+      <span class="badge badge-emerald">RAM Analysis</span>
+    </div>
+    <div class="card-body">
+      Pemeriksaan dump RAM untuk mendeteksi ancaman tanpa berkas (<em>fileless malware</em>):
+      <ul>
+        <li><code>windows.pslist / pstree</code>: Struktur relasi induk-anak proses.</li>
+        <li><code>windows.malfind</code>: Menemukan injeksi shellcode VAD memori tersembunyi.</li>
+        <li><code>windows.netscan</code>: Mendeteksi koneksi jaringan aktif saat RAM dicapture.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin: 8px 0;">
+  <div class="card-header">
+    <span>3. Pelacakan Jejak Flashdisk & Media Penyimpanan (USBSTOR Forensics)</span>
+    <span class="badge badge-blue">Windows Registry</span>
+  </div>
+  <div class="card-body">
+    Untuk membuktikan adanya pencurian data oleh orang dalam (*insider threat*), modul ini mengaudit jalur registri:
+    <ul>
+      <li><code>HKLM\SYSTEM\CurrentControlSet\Enum\USBSTOR</code>: Vendor ID, Product ID, Serial Number unik flashdisk.</li>
+      <li><code>HKLM\SYSTEM\CurrentControlSet\Enum\USB</code>: Riwayat hub USB dan peripheral yang pernah tersambung.</li>
+      <li><code>HKLM\SYSTEM\MountedDevices</code> & <code>STORAGE\Volume</code>: Rekonsiliasi Drive Letter (e.g. E:\, F:\) dan GUID volume.</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Event Log Forensics (Windows Security Event IDs Kritis)</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Event ID</th>
+      <th>Nama Aktivitas</th>
+      <th>Indikasi Ancaman / Analisis Forensik</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>4624</strong></td>
+      <td>Successful Logon</td>
+      <td>Periksa <em>Logon Type</em>: Tipe 2 (Interactive/Fisik), Tipe 3 (Network SMB), Tipe 10 (Remote Desktop RDP).</td>
+    </tr>
+    <tr>
+      <td><strong>4625</strong></td>
+      <td>Failed Logon</td>
+      <td>Indikator serangan <em>Password Spraying</em> atau <em>Brute Force</em> berulang.</td>
+    </tr>
+    <tr>
+      <td><strong>4688</strong></td>
+      <td>Process Creation</td>
+      <td>Mencatat eksekusi perintah lengkap via <code>CommandLine</code> (wajib aktifkan audit policy).</td>
+    </tr>
+    <tr>
+      <td><strong>7045</strong></td>
+      <td>Service Installed</td>
+      <td>Indikator persistensi atau lateral movement (misal: PsExec membuat service baru).</td>
+    </tr>
+    <tr>
+      <td><strong>1102</strong></td>
+      <td>Audit Log Cleared</td>
+      <td>Tindakan anti-forensik oleh penyerang untuk menghapus jejak kejahatan.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Sintaks Eksekusi Skrip <code>forensic_triage.py</code></h3>
+<pre>
+# 1. Audit riwayat koneksi flashdisk (USBSTOR) dari registri lokal:
+python forensic_triage.py --audit-usb
+
+# 2. File carving: ekstrak berkas terhapus dari citra raw disk dump:
+python forensic_triage.py --carve "disk_evidence.raw" --outdir carved_evidence
+
+# 3. Generate template aturan deteksi format Sigma (YAML):
+python forensic_triage.py --gen-sigma --title "Deteksi Ransomware Shadow Copy Deletion" --process "vssadmin.exe delete shadows"
+</pre>
+
+<!-- SECTION 4 -->
+<div class="page-break"></div>
+<h1>⚔️ 4. Deep Dive: Infrastructure Red Teaming & CEH</h1>
+<p>
+Modul <code>infra-red-teaming</code> menerapkan metodologi pengujian penetrasi infrastruktur, jaringan, dan eskalasi hak akses sistem operasi berdasarkan standar <strong>CEH (Certified Ethical Hacker)</strong> dan <strong>NIST SP 800-115</strong>.
+</p>
+
+<h3>Alur 5 Fase Siklus Penyerangan CEH</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Fase Penyerangan</th>
+      <th>Metodologi & Teknik Operasional</th>
+      <th>Pemetaan Taktik MITRE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1. Reconnaissance</strong></td>
+      <td>OSINT publik, WHOIS, DNS Zone Transfer misconfiguration (<code>dig axfr</code>), crt.sh mapping.</td>
+      <td><code>TA0043</code> (Reconnaissance)</td>
+    </tr>
+    <tr>
+      <td><strong>2. Scanning & Enum</strong></td>
+      <td>Stealth SYN scan, Firewall evasion (Xmas/Null/ACK), enumerasi SMB, RPC, SNMP.</td>
+      <td><code>TA0007</code> (Discovery)</td>
+    </tr>
+    <tr>
+      <td><strong>3. Gaining Access</strong></td>
+      <td>MITM (ARP Spoofing, LLMNR Responder), eksploitasi layanan, eskalasi hak akses (PrivEsc).</td>
+      <td><code>TA0001</code> / <code>TA0004</code> (Access / PrivEsc)</td>
+    </tr>
+    <tr>
+      <td><strong>4. Maintaining Access</strong></td>
+      <td>Pemasangan backdoor, persistence via Cron jobs, Windows Scheduled Tasks, Registry Run.</td>
+      <td><code>TA0003</code> (Persistence)</td>
+    </tr>
+    <tr>
+      <td><strong>5. Clearing Tracks</strong></td>
+      <td>Anti-forensik, log tampering, pembersihan cache, Alternate Data Streams (ADS).</td>
+      <td><code>TA0005</code> (Defense Evasion)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <span>Teknik Pemindaian & Evasion Firewall</span>
+      <span class="badge badge-red">Network Scanning</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><strong>SYN Stealth Scan (<code>-sS</code>):</strong> Standar de-facto; koneksi TCP tidak diselesaikan (diakhiri dengan paket RST) untuk menghindari logging pada aplikasi server.</li>
+        <li><strong>TCP ACK Scan (<code>-sA</code>):</strong> Digunakan untuk memetakan aturan firewall; mendeteksi apakah filter bertipe Stateful atau Stateless.</li>
+        <li><strong>Inverse TCP (Null/Fin/Xmas):</strong> Memanfaatkan celah RFC 793 pada sistem Unix; paket tanpa SYN/RST yang dikirim ke port tertutup dibalas RST, sedangkan port terbuka didiamkan.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>Vektor Eskalasi Hak Akses (PrivEsc)</span>
+      <span class="badge badge-red">System Exploitation</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Linux Privilege Escalation:</strong> Eksploitasi file berbiner SUID root tidak aman, sudoers misconfiguration (<code>sudo -l</code>), dan Linux Capabilities (e.g. <code>cap_setuid</code>).</li>
+        <li><strong>Windows Token Manipulation:</strong> Pemanfaatan privilege akun servis seperti <code>SeImpersonatePrivilege</code> menggunakan varian Potato (Juicy, Print, GodPotato) untuk eskalasi ke akun NT AUTHORITY\SYSTEM.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin: 8px 0;">
+  <div class="card-header">
+    <span>Deep Service Enumeration & Cracking</span>
+    <span class="badge badge-slate">Protocol Exploitation</span>
+  </div>
+  <div class="card-body">
+    <ul>
+      <li><strong>SMB & NetBIOS (Port 139/445):</strong> Menguji ketersediaan <em>Null Session</em> (koneksi <code>IPC$</code> tanpa otentikasi) untuk mencuri daftar user, password policy, dan share direktori anonim.</li>
+      <li><strong>SNMP Enumeration (Port 161 UDP):</strong> Melakukan MIB walking pada community string bawaan (<code>public</code> / <code>private</code>) untuk membocorkan konfigurasi routing dan nama software.</li>
+      <li><strong>Man-in-the-Middle (MITM):</strong> Melakukan keracunan cache ARP (ARP Spoofing) serta menangkap hash NetNTLMv2 via LLMNR/NBT-NS Poisoning menggunakan Responder.</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Sintaks Eksekusi Skrip <code>infra_audit.py</code></h3>
+<pre>
+# 1. Scanning multi-threaded port & banner grabbing cepat:
+python infra_audit.py --scan 192.168.1.1 --ports 21,22,80,443,445,3389
+
+# 2. Audit otomatis vektor Local Privilege Escalation (LPE) pada host:
+python infra_audit.py --audit-privesc
+
+# 3. Uji kerentanan SMB Null Session & Anonymous Share pada target:
+python infra_audit.py --smb-check 192.168.1.50
+</pre>
+
+<!-- SECTION 5 -->
+<div class="page-break"></div>
+<h1>🟣 5. Integrasi Web Security Triad (Red, Blue, Purple)</h1>
+<p>
+Tiga modul web security yang telah terpasang beroperasi secara sinergis untuk menguji, memperkuat, dan memvalidasi ketahanan aplikasi web terhadap serangan dunia nyata.
+</p>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <span>Web Red Teaming (<code>web-red-teaming</code>)</span>
+      <span class="badge badge-red">Offensive</span>
+    </div>
+    <div class="card-body">
+      <strong>Fokus:</strong> Pengujian penetrasi aplikasi web berdasarkan <em>OWASP Top 10:2021</em> dan <em>ASVS v4.0</em>.
+      <ul>
+        <li>Deteksi injeksi SQLi, Cross-Site Scripting (XSS), IDOR, SSRF, dan CSRF.</li>
+        <li>Pemindaian berkas sensitif dotfiles (<code>.env</code>, <code>.git</code>, database dump <code>.sql</code>).</li>
+        <li>Pendeteksian webshell dan backdoor tersembunyi via skrip <code>scan_webshell_cve.php</code>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>Web Blue Teaming (<code>web-blue-teaming</code>)</span>
+      <span class="badge badge-blue">Defensive</span>
+    </div>
+    <div class="card-body">
+      <strong>Fokus:</strong> Penguatan sistem dan konfigurasi pertahanan berlapis (<em>Defense in Depth</em>).
+      <ul>
+        <li>Penerapan Security Headers: Content Security Policy (CSP), HSTS, X-Frame-Options.</li>
+        <li>Hardening direktori upload (mematikan eksekusi script PHP via konfigurasi server).</li>
+        <li>Pengecekan hardening otomatis menggunakan skrip <code>hardening_checker.php</code>.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin: 8px 0; border: 1.5px solid #8b5cf6;">
+  <div class="card-header" style="background: #faf5ff; padding: 7px 9px; border-bottom: 1px solid #e9d5ff;">
+    <span style="color: #6b21a8; font-weight: 700;">Web Purple Teaming (<code>web-purple-teaming</code>) - Continuous Validation</span>
+    <span class="badge badge-purple">Orkestrator Utama</span>
+  </div>
+  <div class="card-body">
+    <p>
+    Modul Purple Team bertindak sebagai jembatan yang menjalankan pengujian triad terpadu. Menggunakan skrip <code>purple_orchestrator.php</code>, sistem menjalankan serangan etis (Red), menguji apakah kontrol pertahanan memblokirnya (Blue), dan menghitung <strong>Threat Resistance Score</strong> secara otomatis.
+    </p>
+    <pre>
+# Menjalankan Audit Triad Terpadu (Red + Blue + Purple Verification):
+php purple_orchestrator.php --path="/path/to/project" --target-url="http://target:port"
+    </pre>
+  </div>
+</div>
+
+<h3>Matriks Pemetaan Taktik MITRE ATT&CK for Web</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Taktik MITRE</th>
+      <th>ID Teknik</th>
+      <th>Nama Teknik</th>
+      <th>Simulasi Red Team</th>
+      <th>Kontrol Defensif Blue Team</th>
+      <th>Status Target</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Reconnaissance</strong></td>
+      <td><code>T1595</code></td>
+      <td>Active Scanning</td>
+      <td>Scanning probe <code>.env</code>, <code>.git</code></td>
+      <td>Blokir akses 403 Forbidden / 404</td>
+      <td><span class="badge badge-emerald">BLOCKED</span></td>
+    </tr>
+    <tr>
+      <td><strong>Initial Access</strong></td>
+      <td><code>T1190</code></td>
+      <td>Exploit Public App</td>
+      <td>Injeksi parameter SQLi / XSS</td>
+      <td>Sanitasi prepared statement & CSP</td>
+      <td><span class="badge badge-blue">MITIGATED</span></td>
+    </tr>
+    <tr>
+      <td><strong>Credential Access</strong></td>
+      <td><code>T1110</code></td>
+      <td>Brute Force</td>
+      <td>Pengiriman form login berulang</td>
+      <td>Rate limiting 429 & CAPTCHA</td>
+      <td><span class="badge badge-emerald">BLOCKED</span></td>
+    </tr>
+    <tr>
+      <td><strong>Persistence</strong></td>
+      <td><code>T1505.003</code></td>
+      <td>Web Shell Drop</td>
+      <td>Unggah file berbahaya ke direktori media</td>
+      <td>Sandboxing direktori upload (NoExec)</td>
+      <td><span class="badge badge-emerald">BLOCKED</span></td>
+    </tr>
+    <tr>
+      <td><strong>Defense Evasion</strong></td>
+      <td><code>T1036</code></td>
+      <td>Masquerading</td>
+      <td>Ekstensi ganda <code>shell.php.jpg</code></td>
+      <td>Validasi MIME riil & random file rename</td>
+      <td><span class="badge badge-blue">MITIGATED</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- SECTION 6 -->
+<div class="page-break"></div>
+<h1>🔬 6. Reverse Engineer Anything (REA) & Katalog Perkakas</h1>
+<p>
+Modul <code>reverse-engineer-anything</code> melengkapi portofolio keamanan dengan kemampuan bedah biner lintas platform (Native x86/ARM, Android APK/DEX, .NET, Webpack/JavaScript bundles, hingga Firmware).
+</p>
+
+<div class="grid-2">
+  <div class="card">
+    <div class="card-header">
+      <span>Kapabilitas Reverse Engineering</span>
+      <span class="badge badge-slate">Binary Analysis</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Decompilasi Biner Statis:</strong> Ekstraksi kontrol alur (CFG), cross-references (xrefs), dan decompilasi fungsi menjadi pseudo-code.</li>
+        <li><strong>Dynamic Instrumentation (Frida):</strong> Hooking fungsi native dan managed saat biner berjalan, inspeksi argumen, dan trace return values.</li>
+        <li><strong>Android APK & Firmware:</strong> Unpack resource, decompile smali/DEX, inspeksi arsitektur library native (.so), dan ekstraksi filesystem firmware.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>Dukungan Standar & Format</span>
+      <span class="badge badge-slate">Format Support</span>
+    </div>
+    <div class="card-body">
+      <ul>
+        <li><strong>Format Eksekusi:</strong> Windows PE, Linux ELF, macOS Mach-O.</li>
+        <li><strong>Managed Languages:</strong> .NET CLR assemblies, Go binaries, Rust binaries, Java bytecode.</li>
+        <li><strong>Web & Runtime:</strong> Electron ASAR packages, Minified JS bundles, WASM modules, SQLite database evidence.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h3>Katalog Lengkap Skrip & Lokasi File Modul Keamanan</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Skill Name</th>
+      <th>Lokasi File SKILL.md</th>
+      <th>Skrip Eksekutabel / Helper</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>malware-triage</strong></td>
+      <td><code>~/.gemini/config/skills/malware-triage/SKILL.md</code></td>
+      <td><code>malware-sandbox/sandbox_cli.py</code></td>
+    </tr>
+    <tr>
+      <td><strong>digital-forensics</strong></td>
+      <td><code>~/.gemini/config/skills/digital-forensics/SKILL.md</code></td>
+      <td><code>digital-forensics/scripts/forensic_triage.py</code></td>
+    </tr>
+    <tr>
+      <td><strong>infra-red-teaming</strong></td>
+      <td><code>~/.gemini/config/skills/infra-red-teaming/SKILL.md</code></td>
+      <td><code>infra-red-teaming/scripts/infra_audit.py</code></td>
+    </tr>
+    <tr>
+      <td><strong>web-purple-teaming</strong></td>
+      <td><code>~/.gemini/config/skills/web-purple-teaming/SKILL.md</code></td>
+      <td><code>web-purple-teaming/scripts/purple_orchestrator.php</code></td>
+    </tr>
+    <tr>
+      <td><strong>web-blue-teaming</strong></td>
+      <td><code>~/.gemini/config/skills/web-blue-teaming/SKILL.md</code></td>
+      <td><code>web-blue-teaming/scripts/hardening_checker.php</code></td>
+    </tr>
+    <tr>
+      <td><strong>web-red-teaming</strong></td>
+      <td><code>~/.gemini/config/skills/web-red-teaming/SKILL.md</code></td>
+      <td><code>web-red-teaming/scripts/audit_target.php</code><br/><code>web-red-teaming/scripts/scan_webshell_cve.php</code></td>
+    </tr>
+    <tr>
+      <td><strong>reverse-engineer-anything</strong></td>
+      <td><code>~/.gemini/config/skills/reverse-engineer-anything/SKILL.md</code></td>
+      <td>Toolset REA & MCP Instrumentation Engine</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout" style="margin-top: 14px;">
+  <strong>Kesimpulan Eksekutif:</strong><br/>
+  Kombinasi ketujuh modul ini menghadirkan kapabilitas <em>End-to-End Cyber Threat Lifecycle Management</em> bagi asisten AI Antigravity: mulai dari <strong>Reconnaissance & Penetration Testing</strong> (Red), <strong>Defensive Hardening & Virtual Patching</strong> (Blue), <strong>Validation & Orchestration</strong> (Purple), <strong>Forensic Investigation & Timeline Carving</strong> (DFIR), <strong>Automated Sandbox & Quarantine</strong> (Malware Triage), hingga <strong>Binary Reverse Engineering</strong> (REA).
+</div>
+
+</body>
+</html>
