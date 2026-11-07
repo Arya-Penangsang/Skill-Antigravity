@@ -1,7 +1,7 @@
 # 🛡️ Skill-Antigravity: Complete Cybersecurity & Threat Operations Suite
 
 <p align="center">
-  <img src="docs/skill-antigravity-banner.svg" alt="Skill-Antigravity Banner" width="100%">
+  <img src="https://raw.githubusercontent.com/Arya-Penangsang/Skill-Antigravity/main/docs/skill-antigravity-banner.png" alt="Skill-Antigravity Banner" width="100%">
 </p>
 
 <p align="center">
