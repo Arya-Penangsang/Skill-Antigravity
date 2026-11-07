@@ -1,6 +1,10 @@
 # 🛡️ Skill-Antigravity: Complete Cybersecurity & Threat Operations Suite
 
 <p align="center">
+  <img src="docs/skill-antigravity-banner.svg" alt="Skill-Antigravity Banner" width="100%">
+</p>
+
+<p align="center">
   <b>English</b> • <a href="README.id.md">Bahasa Indonesia</a>
 </p>
 
