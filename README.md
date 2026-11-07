@@ -1,55 +1,59 @@
 # 🛡️ Skill-Antigravity: Complete Cybersecurity & Threat Operations Suite
 
-[![Author: Nafik](https://img.shields.io/badge/Author-Nafik-blue.svg)](https://github.com/nafik-cs)
+<p align="center">
+  <b>English</b> • <a href="README.id.md">Bahasa Indonesia</a>
+</p>
+
+[![Author: Arya Penangsang](https://img.shields.io/badge/Author-Arya%20Penangsang-blue.svg)](https://github.com/Arya-Penangsang)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![PHP 8.0+](https://img.shields.io/badge/PHP-8.0+-777BB4.svg?logo=php&logoColor=white)](https://www.php.net/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-Enterprise%20%26%20Web-red.svg)](https://attack.mitre.org/)
 [![NIST Compliance](https://img.shields.io/badge/NIST-SP%20800--86%20%7C%20800--115-green.svg)](https://csrc.nist.gov/)
 [![OWASP Aligned](https://img.shields.io/badge/OWASP-Top%2010%20%7C%20ASVS%20v4.0-orange.svg)](https://owasp.org/)
-[![AI-Agent Ready](https://img.shields.io/badge/AI--Agent-Antigravity%20Ready-purple.svg)](#-integrasi-ke-antigravity)
+[![AI-Agent Ready](https://img.shields.io/badge/AI--Agent-Antigravity%20Ready-purple.svg)](#-integration-with-google-antigravity)
 
-**Skill-Antigravity** adalah repositori resmi kumpulan modul dan keahlian (*skillset*) keamanan siber komprehensif untuk **Google Antigravity AI Agent** dan analis keamanan profesional. 
+**Skill-Antigravity** is the official comprehensive cybersecurity and threat operations skillset repository built for **Google Antigravity AI Agents** and professional security analysts.
 
-Dikembangkan oleh **Nafik** ([@nafik-cs](https://github.com/nafik-cs)), repositori ini menggabungkan seluruh spektrum pertahanan dan pengujian keamanan siber modern: **Offensive Operations (Red Team)**, **Defensive Hardening (Blue Team)**, **Continuous Validation (Purple Team)**, **Digital Forensics & Incident Response (DFIR)**, **Automated Malware Sandboxing & Quarantine Vault**, serta **Multi-Target Binary Reverse Engineering (REA)**.
+Authored by **Arya Penangsang** ([@Arya-Penangsang](https://github.com/Arya-Penangsang)), this repository bridges the full spectrum of modern cyber defense and offensive security: **Offensive Operations (Red Team)**, **Defensive Hardening (Blue Team)**, **Continuous Validation (Purple Team)**, **Digital Forensics & Incident Response (DFIR)**, **Automated Malware Sandboxing & Quarantine Vault**, and **Multi-Target Binary Reverse Engineering (REA)**.
 
-📄 **Dokumentasi Lengkap (PDF Ringkasan Eksekutif):**  
-[Unduh Ringkasan_Skill_Cybersecurity_Antigravity.pdf](Ringkasan_Skill_Cybersecurity_Antigravity.pdf)
+📄 **Full Documentation (Executive Summary PDF):**  
+[Download Ringkasan_Skill_Cybersecurity_Antigravity.pdf](Ringkasan_Skill_Cybersecurity_Antigravity.pdf)
 
 ---
 
-## 🏛️ Arsitektur & Taksonomi Modul Keamanan
+## 🏛️ Architecture & Taxonomy
 
-```
+```text
 Skill-Antigravity/
-├── Ringkasan_Skill_Cybersecurity_Antigravity.pdf # Laporan Eksekutif Resmi (7 Halaman)
-├── sandbox_cli.py                              # CLI Utama Automated Malware Sandbox
-├── core/                                       # Core Engine Malware Sandbox & Quarantine Vault
-├── docs/                                       # Kurikulum & Dokumentasi Teknis
+├── Ringkasan_Skill_Cybersecurity_Antigravity.pdf # Official Executive Summary Report (7 Pages)
+├── sandbox_cli.py                              # Main Automated Malware Sandbox CLI
+├── core/                                       # Core Malware Sandbox & Quarantine Vault Engine
+├── docs/                                       # Technical Documentation & Curriculum
 ├── skills/
-│   ├── malware-triage/                         # 🦠 Analisis Malware, Entropi, Vault & NIST DFIR
-│   ├── digital-forensics/                      # 🕵️ DFIR Disk Carving, RAM Volatility, USB & Sigma
+│   ├── malware-triage/                         # 🦠 Malware Analysis, Shannon Entropy, Vault & NIST DFIR
+│   ├── digital-forensics/                      # 🕵️ DFIR Disk Carving, RAM Volatility, USB & Sigma Rules
 │   ├── infra-red-teaming/                      # ⚔️ Network Scanning, PrivEsc, SMB/SNMP & CEH v11
-│   ├── web-purple-teaming/                     # 🟣 Validasi Deteksi Kontinu & Orkestrator Triad
+│   ├── web-purple-teaming/                     # 🟣 Continuous Detection Validation & Triad Orchestrator
 │   ├── web-red-teaming/                        # 🔴 Web Penetration Testing (OWASP Top 10 / ASVS)
-│   ├── web-blue-teaming/                       # 🔵 Hardening Server, CIS Benchmarks & WAF
-│   └── reverse-engineer-anything/              # 🔬 Decompilasi Biner & Instrumentasi Dinamis Frida
+│   ├── web-blue-teaming/                       # 🔵 Server Hardening, CIS Benchmarks & WAF
+│   └── reverse-engineer-anything/              # 🔬 Multi-Architecture Binary Decompilation & Frida Instrumentation
 ```
 
 ---
 
-## 📦 Katalog Skillset & Kemampuan Utama
+## 📦 Skillset Catalog & Core Capabilities
 
 ### 1. 🦠 Malware Triage & DFIR Sandbox (`skills/malware-triage`)
-* **Standar Acuan:** NIST SP 800-86, MITRE ATT&CK for Enterprise.
-* **Fitur Utama:**
-  * **Static PE Triage:** MD5, SHA1, SHA256, Imphash, mitigasi memori PE (ASLR, DEP, SafeSEH).
-  * **Analisis Entropi Shannon ($0.0 - 8.0$):** Deteksi kompresi dan enkripsi payload (UPX, Themida, VMProtect).
-  * **Quarantine Vault Engine:** Menetralkan biner otomatis dengan XOR stream mask (Key: `0x5A`) ke format `.quarantined`.
-  * **Dynamic Behavior & Registry Diff:** Deteksi persistensi Run/RunOnce dan pelacakan dropper di `%TEMP%` / `%APPDATA%`.
-  * **C2 Network Sinkhole:** Menangkap koneksi beacon HTTP/DNS dan menstrukturkan log ke 4 fase NIST.
-  * **Automated YARA Rule Generator:** Sintesis aturan deteksi biner secara instan.
-* **Perintah CLI:**
+* **Reference Standards:** NIST SP 800-86, MITRE ATT&CK for Enterprise.
+* **Core Capabilities:**
+  * **Static PE Triage:** MD5, SHA1, SHA256, Imphash, and PE memory mitigations (ASLR, DEP, SafeSEH).
+  * **Shannon Entropy Analysis ($0.0 - 8.0$):** High-precision payload compression and encryption detection (UPX, Themida, VMProtect).
+  * **Quarantine Vault Engine:** Safely neutralizes malicious binaries into `.quarantined` stream masked files via XOR encryption (`0x5A`).
+  * **Dynamic Behavior & Registry Diff:** Detects Run/RunOnce persistence mechanisms and tracks dropped files in `%TEMP%` / `%APPDATA%`.
+  * **C2 Network Sinkhole:** Captures HTTP/DNS beacons and formats structured audit logs mapped to the 4 NIST incident phases.
+  * **Automated YARA Rule Generator:** Automatically synthesizes production-ready detection rules.
+* **CLI Usage:**
   ```bash
   python sandbox_cli.py "sample.exe" --dynamic --timeout 15 --reg-diff --sinkhole --quarantine --outdir reports
   ```
@@ -57,31 +61,31 @@ Skill-Antigravity/
 ---
 
 ### 2. 🕵️ Digital Forensics & Incident Response (`skills/digital-forensics`)
-* **Standar Acuan:** NIST SP 800-86, ISO/IEC 27037, RFC 3227 (*Order of Volatility*).
-* **Fitur Utama:**
-  * **File Carving Otomatis:** Ekstraksi berkas terhapus dari citra raw disk (`.raw`, `.dd`, `.001`, `.E01`) via *Magic Bytes* (JPEG, PDF, ZIP, Office, PE MZ).
-  * **Forensik Memori RAM:** Rekonstruksi proses via Volatility 3 (`windows.pslist`, `pstree`), deteksi injeksi kode tersembunyi (`malfind`), dan soket aktif (`netscan`).
-  * **Pelacakan Flashdisk (USBSTOR Forensics):** Audit registri Windows `HKLM\SYSTEM\CurrentControlSet\Enum\USBSTOR` untuk membuktikan kebocoran data internal (*insider threat*).
-  * **Windows Event Log Forensics:** Analisis Event ID 4624 (Logon), 4625 (Brute force), 4688 (Process Creation), 7045 (New Service), 1102 (Log Cleared).
-  * **Sigma YAML Generator:** Menghasilkan template aturan deteksi insiden untuk SIEM/EDR.
-* **Perintah CLI:**
+* **Reference Standards:** NIST SP 800-86, ISO/IEC 27037, RFC 3227 (*Order of Volatility*).
+* **Core Capabilities:**
+  * **Automated File Carving:** Extracts deleted and hidden files from raw disk images (`.raw`, `.dd`, `.001`, `.E01`) using file header/footer magic bytes (JPEG, PDF, ZIP, Office, PE MZ).
+  * **RAM Memory Forensics:** Process reconstruction via Volatility 3 (`windows.pslist`, `pstree`), hidden injected code detection (`malfind`), and socket inspection (`netscan`).
+  * **USB Artifact Auditing (USBSTOR Forensics):** Parses Windows registry `HKLM\SYSTEM\CurrentControlSet\Enum\USBSTOR` to investigate unauthorized data exfiltration (*insider threat*).
+  * **Windows Event Log Forensics:** Analyzes critical Event IDs: 4624 (Logon), 4625 (Brute Force), 4688 (Process Creation), 7045 (Service Install), and 1102 (Log Cleared).
+  * **Sigma YAML Generator:** Generates vendor-agnostic detection rules for SIEM and EDR deployments.
+* **CLI Usage:**
   ```bash
   python skills/digital-forensics/scripts/forensic_triage.py --audit-usb
   python skills/digital-forensics/scripts/forensic_triage.py --carve evidence.raw --outdir carved_files
-  python skills/digital-forensics/scripts/forensic_triage.py --gen-sigma --title "Deteksi Ransomware" --process "vssadmin.exe delete shadows"
+  python skills/digital-forensics/scripts/forensic_triage.py --gen-sigma --title "Ransomware Detection" --process "vssadmin.exe delete shadows"
   ```
 
 ---
 
 ### 3. ⚔️ Infrastructure Red Teaming & CEH (`skills/infra-red-teaming`)
-* **Standar Acuan:** CEH (Certified Ethical Hacker v10/v11), NIST SP 800-115, MITRE ATT&CK for Enterprise.
-* **Fitur Utama:**
-  * **Multi-threaded Port Scanner & Banner Grabbing:** Pemindaian TCP cepat berkecepatan tinggi.
-  * **Firewall Evasion Scanning:** Teknik TCP SYN Stealth (`-sS`), TCP ACK (`-sA`), dan Inverse TCP (Xmas, Null, FIN) berbasis RFC 793.
-  * **Local Privilege Escalation (LPE) Auditor:** Pengecekan otomatis miskonfigurasi Linux SUID / Capabilities serta Windows Token Manipulation (`SeImpersonatePrivilege` / Potato family).
-  * **SMB & Service Enumeration:** Pengecekan *Null Session* pada `IPC$` (Port 445/139) dan SNMP MIB walking (Port 161).
-  * **Simulasi MITM:** ARP Spoofing dan sniffing LLMNR/NBT-NS via Responder.
-* **Perintah CLI:**
+* **Reference Standards:** CEH (Certified Ethical Hacker v10/v11), NIST SP 800-115, MITRE ATT&CK for Enterprise.
+* **Core Capabilities:**
+  * **High-Speed Multi-Threaded Port Scanner:** Fast TCP socket scanning with service banner grabbing.
+  * **Firewall Evasion Scanning:** Implements stealth TCP SYN (`-sS`), TCP ACK (`-sA`), and Inverse TCP (Xmas, Null, FIN) packet scans following RFC 793.
+  * **Local Privilege Escalation (LPE) Auditor:** Audits Linux SUID / POSIX capabilities and Windows Token Manipulation misconfigurations (`SeImpersonatePrivilege` / Potato family).
+  * **SMB & Service Enumeration:** Checks for Null Session access on `IPC$` (Port 445/139) and SNMP MIB walking (Port 161).
+  * **MITM Simulation:** ARP Spoofing and LLMNR/NBT-NS credential poisoning via Responder.
+* **CLI Usage:**
   ```bash
   python skills/infra-red-teaming/scripts/infra_audit.py --scan 192.168.1.1 --ports 21,22,80,443,445,3389
   python skills/infra-red-teaming/scripts/infra_audit.py --audit-privesc
@@ -91,12 +95,12 @@ Skill-Antigravity/
 ---
 
 ### 4. 🟣 Web Purple Teaming & Continuous Validation (`skills/web-purple-teaming`)
-* **Standar Acuan:** MITRE ATT&CK for Web Applications, NIST CSF 2.0.
-* **Fitur Utama:**
-  * **Siklus Orkestrasi 4 Tahap:** *Threat Emulation* ➔ *Detection Validation* ➔ *Remediation Tuning* ➔ *Regression Testing*.
-  * **Triad Orchestrator Script:** Mengintegrasikan serangan Red Team dan verifikasi Blue Team secara simultan.
-  * **Perhitungan Skor Ketahanan (Threat Resistance Score):** Mengukur efektivitas pertahanan secara kuantitatif.
-* **Perintah CLI:**
+* **Reference Standards:** MITRE ATT&CK for Web Applications, NIST CSF 2.0.
+* **Core Capabilities:**
+  * **4-Phase Orchestration Cycle:** *Threat Emulation* ➔ *Detection Validation* ➔ *Remediation Tuning* ➔ *Regression Testing*.
+  * **Triad Orchestrator Script:** Simultaneously runs Red Team attack simulations alongside Blue Team SIEM/WAF detection checks.
+  * **Threat Resistance Score:** Quantitatively scores defensive posture resilience.
+* **CLI Usage:**
   ```bash
   php skills/web-purple-teaming/scripts/purple_orchestrator.php --path="/path/to/project" --target-url="http://target:port"
   ```
@@ -104,12 +108,12 @@ Skill-Antigravity/
 ---
 
 ### 5. 🔴 Web Red Teaming (`skills/web-red-teaming`)
-* **Standar Acuan:** OWASP Top 10:2021, OWASP ASVS v4.0.
-* **Fitur Utama:**
-  * Pemindaian otomatis kerentanan injeksi: SQL Injection (SQLi), Cross-Site Scripting (XSS), IDOR, SSRF, dan CSRF.
-  * Deteksi kebocoran berkas sensitif: `.env`, `.git`, `.htaccess`, database dump `.sql`.
-  * Deteksi webshell, trojan PHP, dan CVE backdoor bawaan via `scan_webshell_cve.php`.
-* **Perintah CLI:**
+* **Reference Standards:** OWASP Top 10:2021, OWASP ASVS v4.0.
+* **Core Capabilities:**
+  * Automated injection vulnerability scanning: SQL Injection (SQLi), Cross-Site Scripting (XSS), IDOR, SSRF, and CSRF.
+  * Sensitive file exposure detection: `.env`, `.git`, `.htaccess`, and `.sql` database dumps.
+  * Backdoor, PHP trojan, and CVE detection via `scan_webshell_cve.php`.
+* **CLI Usage:**
   ```bash
   php skills/web-red-teaming/scripts/audit_target.php --url="http://localhost:8080"
   php skills/web-red-teaming/scripts/scan_webshell_cve.php --dir="/var/www/html"
@@ -118,12 +122,12 @@ Skill-Antigravity/
 ---
 
 ### 6. 🔵 Web Blue Teaming (`skills/web-blue-teaming`)
-* **Standar Acuan:** CIS Benchmarks, OWASP Defense in Depth, BSSN.
-* **Fitur Utama:**
-  * Audit konfigurasi keamanan aplikasi web (PHP, Apache, Nginx).
-  * Penguatan HTTP Security Headers: Content Security Policy (CSP), Strict-Transport-Security (HSTS), X-Frame-Options.
-  * Sandboxing direktori upload media (pencegahan eksekusi biner/PHP berbahaya).
-* **Perintah CLI:**
+* **Reference Standards:** CIS Benchmarks, OWASP Defense in Depth, BSSN.
+* **Core Capabilities:**
+  * Web application server security hardening audits (PHP, Apache, Nginx).
+  * HTTP Security Headers enforcement: Content Security Policy (CSP), Strict-Transport-Security (HSTS), X-Frame-Options.
+  * Media upload directory sandboxing (prevention of malicious binary/PHP execution).
+* **CLI Usage:**
   ```bash
   php skills/web-blue-teaming/scripts/hardening_checker.php --path="/path/to/project"
   ```
@@ -131,30 +135,29 @@ Skill-Antigravity/
 ---
 
 ### 7. 🔬 Reverse Engineer Anything (`skills/reverse-engineer-anything`)
-* **Standar Acuan:** Binary Static & Dynamic Reverse Engineering Standards.
-* **Fitur Utama:**
-  * Analisis biner lintas arsitektur: x86/x64, ARM, PE (Windows), ELF (Linux), Mach-O (macOS).
-  * Managed & Web Applications: .NET CLR assemblies, Go, Rust, Java/DEX, Electron ASAR, dan Webpack JS.
-  * Dynamic Instrumentation Engine: Hooking fungsi memori secara langsung menggunakan Frida toolkit.
+* **Reference Standards:** Binary Static & Dynamic Reverse Engineering Standards.
+* **Core Capabilities:**
+  * Multi-architecture binary analysis: x86/x64, ARM, PE (Windows), ELF (Linux), and Mach-O (macOS).
+  * Managed & Web Applications: .NET CLR assemblies, Go, Rust, Java/DEX, Electron ASAR, and Webpack JS bundles.
+  * Dynamic Instrumentation Engine: Runtime function memory hooking powered by the Frida toolkit.
 
 ---
 
-## 🚀 Integrasi ke Google Antigravity
+## 🚀 Integration with Google Antigravity
 
-Untuk mengaktifkan seluruh modul ini langsung pada asisten AI Antigravity Anda:
+To enable this entire cybersecurity skillset directly in your Antigravity AI assistant:
 
-1. **Kloning atau Salin Modul ke Direktori Konfigurasi Antigravity:**
+1. **Copy Skills to Antigravity Configuration Directory:**
    ```bash
-   # Salin seluruh folder skills ke folder skill global Antigravity:
    cp -r skills/* ~/.gemini/config/skills/
    ```
-2. **Restart Antigravity / Buka Sesi Baru:**
-   Asisten secara otomatis akan mendeteksi ke-7 skill ini dan langsung menggunakannya saat diperintahkan untuk melakukan analisis keamanan, audit penetrasi, atau forensik digital.
+2. **Start a New Antigravity Session:**
+   Antigravity will automatically discover all 7 skills and invoke them on demand during penetration testing, security auditing, malware analysis, or incident forensics tasks.
 
 ---
 
-## 👨‍💻 Kontributor & Lisensi
+## 👨‍💻 Contributors & License
 
-* **Lead Security Researcher & Creator:** **Nafik** ([@nafik-cs](https://github.com/nafik-cs))
+* **Lead Security Researcher & Creator:** **Arya Penangsang** ([@Arya-Penangsang](https://github.com/Arya-Penangsang))
 * **AI Security Pair:** Google Antigravity
-* **Lisensi:** Proyek ini dirilis di bawah lisensi [MIT License](LICENSE).
+* **License:** This project is licensed under the [MIT License](LICENSE).
